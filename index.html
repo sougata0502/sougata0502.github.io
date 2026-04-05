@@ -3,157 +3,251 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Heyy there! I'm Sougata </title>
+    <title>My Digital Garden</title>
     <style>
+        /* --- Color Palette & Variables --- */
         :root {
-            --bg-color: #fcfbf9;
-            --text-color: #2c2c2c;
-            --accent-color: #4a6741; /* Earthy green */
-            --border-color: #e0e0e0;
+            --bg-color: #f6f5f1; /* Soft, paper-like background */
+            --text-main: #2b2b2b;
+            --text-muted: #595959;
+            --accent-primary: #8b3a3a; /* Deep terracotta/brick */
+            --accent-secondary: #3b5042; /* Deep forest green */
+            --border-color: #d1cfc7;
         }
+
+        /* --- Base Styles --- */
+        html {
+            scroll-behavior: smooth; /* Smooth scrolling for navigation */
+        }
+        
         body {
-            font-family: 'Georgia', serif;
+            font-family: 'Georgia', 'Times New Roman', serif;
             background-color: var(--bg-color);
-            color: var(--text-color);
+            color: var(--text-main);
             line-height: 1.8;
             margin: 0;
             padding: 0;
-        }
-        header {
-            text-align: center;
-            padding: 4rem 2rem 2rem;
-            border-bottom: 1px solid var(--border-color);
-        }
-        h1 {
-            font-size: 2.5rem;
-            margin-bottom: 0.5rem;
-            font-weight: normal;
-        }
-        .subtitle {
-            color: #666;
-            font-style: italic;
             font-size: 1.1rem;
         }
+
+        /* --- Header & Typography --- */
+        header {
+            text-align: center;
+            padding: 6rem 2rem 3rem;
+        }
+        
+        h1 {
+            font-size: 3.5rem;
+            margin: 0 0 1rem;
+            font-weight: normal;
+            letter-spacing: -0.02em;
+            color: var(--accent-secondary);
+        }
+        
+        .subtitle {
+            color: var(--text-muted);
+            font-style: italic;
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* --- Navigation --- */
         nav {
             display: flex;
             justify-content: center;
-            gap: 2rem;
+            flex-wrap: wrap;
+            gap: 2.5rem;
             padding: 1.5rem 0;
-            background-color: #fff;
+            border-top: 1px solid var(--border-color);
             border-bottom: 1px solid var(--border-color);
+            background-color: rgba(246, 245, 241, 0.95);
             position: sticky;
             top: 0;
+            z-index: 100;
         }
+        
         nav a {
             text-decoration: none;
-            color: var(--text-color);
+            color: var(--text-main);
             font-weight: bold;
             text-transform: uppercase;
             font-size: 0.85rem;
-            letter-spacing: 1px;
+            letter-spacing: 2px;
             transition: color 0.3s ease;
         }
+        
         nav a:hover {
-            color: var(--accent-color);
+            color: var(--accent-primary);
         }
+
+        /* --- Layout --- */
         main {
-            max-width: 800px;
-            margin: 3rem auto;
+            max-width: 900px;
+            margin: 4rem auto;
             padding: 0 2rem;
         }
+        
         section {
-            margin-bottom: 4rem;
+            margin-bottom: 5rem;
+            padding-top: 2rem; /* Buffer for sticky nav */
         }
+        
         h2 {
-            font-size: 1.8rem;
-            color: var(--accent-color);
-            border-bottom: 2px solid var(--accent-color);
-            padding-bottom: 0.5rem;
-            display: inline-block;
+            font-size: 2rem;
+            color: var(--text-main);
+            font-weight: normal;
+            margin-bottom: 2rem;
+            position: relative;
         }
-        .post-card {
-            background: #fff;
-            padding: 1.5rem;
+        
+        h2::after {
+            content: '';
+            display: block;
+            width: 50px;
+            height: 2px;
+            background-color: var(--accent-primary);
+            margin-top: 10px;
+        }
+
+        /* --- Post Grids & Cards --- */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+        
+        .card {
+            background: #ffffff;
+            padding: 2rem;
             border: 1px solid var(--border-color);
-            border-radius: 4px;
-            margin-bottom: 1.5rem;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
-        .post-card h3 {
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+            border-color: var(--accent-secondary);
+        }
+        
+        .card h3 {
             margin-top: 0;
-            margin-bottom: 0.5rem;
+            font-size: 1.4rem;
+            color: var(--accent-secondary);
         }
+        
         .date {
             font-size: 0.85rem;
-            color: #888;
-            margin-bottom: 1rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
             display: block;
+            margin-bottom: 1rem;
         }
+
+        .read-more {
+            display: inline-block;
+            margin-top: 1rem;
+            color: var(--accent-primary);
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .read-more:hover {
+            text-decoration: underline;
+        }
+
+        /* --- Profile/Bio Section --- */
+        .bio-box {
+            background: #ffffff;
+            border-left: 4px solid var(--accent-secondary);
+            padding: 2rem;
+            margin-bottom: 4rem;
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        /* --- Footer --- */
         footer {
             text-align: center;
-            padding: 3rem;
+            padding: 4rem 2rem;
             border-top: 1px solid var(--border-color);
-            color: #666;
+            color: var(--text-muted);
             font-size: 0.9rem;
+            margin-top: 4rem;
         }
     </style>
 </head>
 <body>
 
     <header>
-        <h1>My Digital Garden</h1>
-        <p class="subtitle">An open archive of insights, experiences, and ideas.</p>
+        <h1>The Intellectual Sandbox</h1>
+        <p class="subtitle">Notes, essays, and research from a quiet corner of West Bengal.</p>
     </header>
 
     <nav>
-        <a href="#about">The Manifesto</a>
-        <a href="#insights">Insights</a>
-        <a href="#scrapbook">The Scrapbook</a>
-        <a href="#library">The Library</a>
+        <a href="#about">About</a>
+        <a href="#essays">Essays</a>
+        <a href="#research">Research</a>
+        <a href="#scrapbook">Scrapbook</a>
+        <a href="https://students.iiserkol.ac.in/~sm22ms013/" target="_blank" rel="noopener noreferrer">IISER Profile ↗</a>
     </nav>
 
     <main>
-        <section id="about">
-            <h2>The Manifesto</h2>
-            <p>I built this space because the modern internet has become too loud. Social media demands performance, and platforms that once fostered intellect have faded. This is my quiet corner of the web. No algorithms, no likes, just pure thought. Here, I plant ideas and let them grow.</p>
+        <div class="bio-box" id="about">
+            <div>
+                <p><strong>Hello. I am an independent thinker and student at IISER Kolkata.</strong></p>
+                <p>I built this digital garden as an antidote to algorithmic feeds and the decline of platforms like Quora. This is my personal archive. No likes, no metrics, just a space for deep thought, scientific inquiry, and raw observation.</p>
+            </div>
+        </div>
+
+        <section id="essays">
+            <h2>Essays & Insights</h2>
+            <p style="color: var(--text-muted); margin-bottom: 2rem;"><em>Long-form explorations of philosophy, society, and the modern web.</em></p>
+            
+            <div class="grid">
+                <div class="card">
+                    <span class="date">April 2026</span>
+                    <h3>The Death of the Intellectual Web</h3>
+                    <p>An exploration of why platforms that once fostered intellect have faded into noise, and why personal websites are the necessary cure...</p>
+                    <a href="#" class="read-more">Read Essay →</a>
+                </div>
+                <div class="card">
+                    <span class="date">March 2026</span>
+                    <h3>Reclaiming Focus in a Distracted World</h3>
+                    <p>Thoughts on stepping away from social media and restructuring my environment for deep work and genuine creativity.</p>
+                    <a href="#" class="read-more">Read Essay →</a>
+                </div>
+            </div>
         </section>
 
-        <section id="insights">
-            <h2>Insights</h2>
-            <p><em>Long-form essays and deeper philosophical dives.</em></p>
+        <section id="research">
+            <h2>Academic & Research</h2>
+            <p style="color: var(--text-muted); margin-bottom: 2rem;"><em>Notes from my time at IISER Kolkata.</em></p>
             
-            <div class="post-card">
-                <h3>The Death of the Intellectual Web</h3>
-                <span class="date">April 6, 2026</span>
-                <p>An exploration of why platforms like Quora lost their edge, and why personal websites are the necessary antidote to algorithmic feeds...</p>
-                <a href="#" style="color: var(--accent-color); text-decoration: none; font-weight: bold;">Read more →</a>
+            <div class="card">
+                <h3>Current Studies & Interests</h3>
+                <p>Documenting my ongoing coursework, literature reviews, and scientific observations. This space serves as a bridge between my formal education and independent inquiry.</p>
             </div>
         </section>
 
         <section id="scrapbook">
             <h2>The Scrapbook</h2>
-            <p><em>Raw experiences, short notes, and daily observations.</em></p>
+            <p style="color: var(--text-muted); margin-bottom: 2rem;"><em>Shorter fragments, daily logs, and local observations.</em></p>
 
-            <div class="post-card">
-                <h3>A Morning in West Bengal</h3>
-                <span class="date">April 5, 2026</span>
-                <p>The quiet of the morning before the world wakes up is the only time I can truly hear myself think. Today, I decided to finally ditch social media.</p>
+            <div class="card" style="border-left: 3px solid var(--accent-primary);">
+                <span class="date">April 6, 2026</span>
+                <p>Morning in West Bengal. The quiet before the campus fully wakes up is the best time for structuring new ideas. Finally moving my thoughts off external platforms and into this self-hosted space.</p>
             </div>
-        </section>
-
-        <section id="library">
-            <h2>The Library</h2>
-            <p><em>What is currently feeding my mind.</em></p>
-            
-            <ul style="list-style-type: square; color: var(--accent-color);">
-                <li><span style="color: var(--text-color);"><strong>Book:</strong> <em>Amusing Ourselves to Death</em> by Neil Postman - A highly relevant read on how media shapes our discourse.</span></li>
-                <li><span style="color: var(--text-color);"><strong>Podcast:</strong> An interesting debate on the future of independent web publishing.</span></li>
-            </ul>
         </section>
     </main>
 
     <footer>
-        <p>Built with intention. Hosted freely on GitHub Pages.</p>
+        <p>Built with intention. Curated by sm22ms013.<br>Hosted independently via GitHub Pages.</p>
     </footer>
 
 </body>
