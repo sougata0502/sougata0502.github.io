@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Digital Garden</title>
+    <style>
+        :root {
+            --bg-color: #fcfbf9;
+            --text-color: #2c2c2c;
+            --accent-color: #4a6741; /* Earthy green */
+            --border-color: #e0e0e0;
+        }
+        body {
+            font-family: 'Georgia', serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.8;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            text-align: center;
+            padding: 4rem 2rem 2rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            font-weight: normal;
+        }
+        .subtitle {
+            color: #666;
+            font-style: italic;
+            font-size: 1.1rem;
+        }
+        nav {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            padding: 1.5rem 0;
+            background-color: #fff;
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+        }
+        nav a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            transition: color 0.3s ease;
+        }
+        nav a:hover {
+            color: var(--accent-color);
+        }
+        main {
+            max-width: 800px;
+            margin: 3rem auto;
+            padding: 0 2rem;
+        }
+        section {
+            margin-bottom: 4rem;
+        }
+        h2 {
+            font-size: 1.8rem;
+            color: var(--accent-color);
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 0.5rem;
+            display: inline-block;
+        }
+        .post-card {
+            background: #fff;
+            padding: 1.5rem;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+        }
+        .post-card h3 {
+            margin-top: 0;
+            margin-bottom: 0.5rem;
+        }
+        .date {
+            font-size: 0.85rem;
+            color: #888;
+            margin-bottom: 1rem;
+            display: block;
+        }
+        footer {
+            text-align: center;
+            padding: 3rem;
+            border-top: 1px solid var(--border-color);
+            color: #666;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>My Digital Garden</h1>
+        <p class="subtitle">An open archive of insights, experiences, and ideas.</p>
+    </header>
+
+    <nav>
+        <a href="#about">The Manifesto</a>
+        <a href="#insights">Insights</a>
+        <a href="#scrapbook">The Scrapbook</a>
+        <a href="#library">The Library</a>
+    </nav>
+
+    <main>
+        <section id="about">
+            <h2>The Manifesto</h2>
+            <p>I built this space because the modern internet has become too loud. Social media demands performance, and platforms that once fostered intellect have faded. This is my quiet corner of the web. No algorithms, no likes, just pure thought. Here, I plant ideas and let them grow.</p>
+        </section>
+
+        <section id="insights">
+            <h2>Insights</h2>
+            <p><em>Long-form essays and deeper philosophical dives.</em></p>
+            
+            <div class="post-card">
+                <h3>The Death of the Intellectual Web</h3>
+                <span class="date">April 6, 2026</span>
+                <p>An exploration of why platforms like Quora lost their edge, and why personal websites are the necessary antidote to algorithmic feeds...</p>
+                <a href="#" style="color: var(--accent-color); text-decoration: none; font-weight: bold;">Read more →</a>
+            </div>
+        </section>
+
+        <section id="scrapbook">
+            <h2>The Scrapbook</h2>
+            <p><em>Raw experiences, short notes, and daily observations.</em></p>
+
+            <div class="post-card">
+                <h3>A Morning in West Bengal</h3>
+                <span class="date">April 5, 2026</span>
+                <p>The quiet of the morning before the world wakes up is the only time I can truly hear myself think. Today, I decided to finally ditch social media.</p>
+            </div>
+        </section>
+
+        <section id="library">
+            <h2>The Library</h2>
+            <p><em>What is currently feeding my mind.</em></p>
+            
+            <ul style="list-style-type: square; color: var(--accent-color);">
+                <li><span style="color: var(--text-color);"><strong>Book:</strong> <em>Amusing Ourselves to Death</em> by Neil Postman - A highly relevant read on how media shapes our discourse.</span></li>
+                <li><span style="color: var(--text-color);"><strong>Podcast:</strong> An interesting debate on the future of independent web publishing.</span></li>
+            </ul>
+        </section>
+    </main>
+
+    <footer>
+        <p>Built with intention. Hosted freely on GitHub Pages.</p>
+    </footer>
+
+</body>
+</html>
