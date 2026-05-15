@@ -3,252 +3,843 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Digital Garden</title>
+    <title>The Intellectual Sandbox — A Digital Garden</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
     <style>
-        /* --- Color Palette & Variables --- */
         :root {
-            --bg-color: #f6f5f1; /* Soft, paper-like background */
-            --text-main: #2b2b2b;
-            --text-muted: #595959;
-            --accent-primary: #8b3a3a; /* Deep terracotta/brick */
-            --accent-secondary: #3b5042; /* Deep forest green */
-            --border-color: #d1cfc7;
+            --bg-deep: #0d0b0a;
+            --bg-surface: #1a1614;
+            --bg-card: #1e1a17;
+            --bg-elevated: #25201c;
+            --text-primary: #e8e0d5;
+            --text-secondary: #b8a99a;
+            --text-muted: #8a7b6c;
+            --accent-gold: #c8964c;
+            --accent-gold-light: #e0b978;
+            --accent-amber: #b8752e;
+            --accent-bronze: #8b5e3c;
+            --accent-rust: #9b4e3a;
+            --accent-sage: #7a8b6e;
+            --accent-cream: #f0e6d3;
+            --border-subtle: rgba(200, 170, 130, 0.15);
+            --border-medium: rgba(200, 170, 130, 0.25);
+            --border-accent: rgba(200, 150, 76, 0.5);
+            --glow-gold: rgba(200, 150, 76, 0.25);
+            --glow-warm: rgba(180, 120, 50, 0.18);
+            --shadow-card: 0 4px 24px rgba(0, 0, 0, 0.4), 0 1px 4px rgba(0, 0, 0, 0.3);
+            --shadow-elevated: 0 12px 40px rgba(0, 0, 0, 0.5), 0 2px 8px rgba(0, 0, 0, 0.35);
+            --shadow-glow: 0 0 60px rgba(200, 150, 76, 0.08), 0 0 120px rgba(180, 120, 50, 0.04);
+            --radius-sm: 6px;
+            --radius-md: 12px;
+            --radius-lg: 20px;
+            --transition-smooth: 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
+            --transition-bounce: 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+            --transition-glide: 0.6s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        /* --- Base Styles --- */
-        html {
-            scroll-behavior: smooth; /* Smooth scrolling for navigation */
-        }
-        
-        body {
-            font-family: 'Georgia', 'Times New Roman', serif;
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            line-height: 1.8;
+        * {
             margin: 0;
             padding: 0;
-            font-size: 1.1rem;
+            box-sizing: border-box;
         }
 
-        /* --- Header & Typography --- */
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 100px;
+        }
+
+        body {
+            font-family: 'Cormorant Garamond', 'Georgia', 'Times New Roman', serif;
+            background-color: var(--bg-deep);
+            color: var(--text-primary);
+            line-height: 1.9;
+            font-size: 1.15rem;
+            font-weight: 400;
+            letter-spacing: 0.01em;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            background-image:
+                radial-gradient(ellipse at 15% 5%, rgba(200, 150, 76, 0.04) 0%, transparent 55%),
+                radial-gradient(ellipse at 85% 30%, rgba(180, 130, 70, 0.03) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 70%, rgba(160, 100, 50, 0.035) 0%, transparent 50%),
+                radial-gradient(ellipse at 25% 90%, rgba(200, 160, 90, 0.03) 0%, transparent 45%);
+        }
+
+        /* ── Subtle animated grain overlay ── */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            opacity: 0.035;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+            background-size: 180px 180px;
+            animation: grainShift 8s steps(3) infinite;
+        }
+
+        @keyframes grainShift {
+            0%,
+            100% {
+                background-position: 0 0;
+            }
+            33% {
+                background-position: -30px -20px;
+            }
+            66% {
+                background-position: 20px 15px;
+            }
+        }
+
+        /* ── Floating particles ── */
+        .particles-container {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            pointer-events: none;
+            animation: floatUp linear infinite;
+            opacity: 0;
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(105vh) translateX(0) scale(0);
+                opacity: 0;
+            }
+            5% {
+                opacity: 0.7;
+            }
+            15% {
+                opacity: 0.5;
+            }
+            40% {
+                opacity: 0.25;
+            }
+            70% {
+                opacity: 0.08;
+            }
+            95% {
+                opacity: 0;
+            }
+            100% {
+                transform: translateY(-10vh) translateX(40px) scale(1.8);
+                opacity: 0;
+            }
+        }
+
+        @keyframes floatUpAlt {
+            0% {
+                transform: translateY(105vh) translateX(0) scale(0);
+                opacity: 0;
+            }
+            5% {
+                opacity: 0.6;
+            }
+            20% {
+                opacity: 0.4;
+            }
+            50% {
+                opacity: 0.15;
+            }
+            80% {
+                opacity: 0.04;
+            }
+            100% {
+                transform: translateY(-10vh) translateX(-50px) scale(1.5);
+                opacity: 0;
+            }
+        }
+
+        /* ── Main content wrapper ── */
+        .main-wrapper {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ── Header ── */
         header {
             text-align: center;
-            padding: 6rem 2rem 3rem;
-        }
-        
-        h1 {
-            font-size: 3.5rem;
-            margin: 0 0 1rem;
-            font-weight: normal;
-            letter-spacing: -0.02em;
-            color: var(--accent-secondary);
-        }
-        
-        .subtitle {
-            color: var(--text-muted);
-            font-style: italic;
-            font-size: 1.2rem;
-            max-width: 600px;
-            margin: 0 auto;
+            padding: 5rem 2rem 3.5rem;
+            position: relative;
         }
 
-        /* --- Navigation --- */
+        .header-ornament {
+            display: block;
+            margin: 0 auto 1.5rem;
+            width: 70px;
+            height: 70px;
+            position: relative;
+        }
+
+        .header-ornament::before {
+            content: '◆';
+            font-size: 2.2rem;
+            color: var(--accent-gold);
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation: ornamentPulse 4s ease-in-out infinite;
+            text-shadow: 0 0 30px var(--glow-gold), 0 0 60px rgba(200, 150, 76, 0.15);
+        }
+
+        .header-ornament::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 50px;
+            height: 50px;
+            border: 1px solid rgba(200, 150, 76, 0.3);
+            border-radius: 50%;
+            animation: ornamentRing 6s ease-in-out infinite;
+        }
+
+        @keyframes ornamentPulse {
+            0%,
+            100% {
+                opacity: 0.7;
+                transform: translate(-50%, -50%) scale(1);
+            }
+            50% {
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(1.15);
+            }
+        }
+
+        @keyframes ornamentRing {
+            0%,
+            100% {
+                width: 50px;
+                height: 50px;
+                opacity: 0.5;
+            }
+            50% {
+                width: 70px;
+                height: 70px;
+                opacity: 0.15;
+            }
+        }
+
+        h1 {
+            font-family: 'Playfair Display', 'Georgia', serif;
+            font-size: clamp(2.8rem, 5vw, 4.5rem);
+            margin: 0 0 1rem;
+            font-weight: 500;
+            letter-spacing: -0.01em;
+            color: var(--accent-cream);
+            text-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
+            position: relative;
+            display: inline-block;
+        }
+
+        h1::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 2px;
+            background: linear-gradient(90deg,
+                    transparent,
+                    var(--accent-gold),
+                    var(--accent-gold-light),
+                    var(--accent-gold),
+                    transparent);
+            border-radius: 1px;
+        }
+
+        .subtitle {
+            color: var(--text-secondary);
+            font-style: italic;
+            font-size: 1.25rem;
+            font-weight: 300;
+            max-width: 620px;
+            margin: 1.8rem auto 0;
+            letter-spacing: 0.03em;
+            font-family: 'Cormorant Garamond', 'Georgia', serif;
+            text-shadow: 0 1px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        /* ── Navigation ── */
         nav {
             display: flex;
             justify-content: center;
             flex-wrap: wrap;
-            gap: 2.5rem;
-            padding: 1.5rem 0;
-            border-top: 1px solid var(--border-color);
-            border-bottom: 1px solid var(--border-color);
-            background-color: rgba(246, 245, 241, 0.95);
+            gap: 2.8rem;
+            padding: 1.4rem 2rem;
+            background: rgba(26, 22, 20, 0.75);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-top: 1px solid var(--border-subtle);
+            border-bottom: 1px solid var(--border-subtle);
             position: sticky;
             top: 0;
-            z-index: 100;
-        }
-        
-        nav a {
-            text-decoration: none;
-            color: var(--text-main);
-            font-weight: bold;
-            text-transform: uppercase;
-            font-size: 0.85rem;
-            letter-spacing: 2px;
-            transition: color 0.3s ease;
-        }
-        
-        nav a:hover {
-            color: var(--accent-primary);
+            z-index: 200;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.35);
+            transition: background 0.4s ease;
         }
 
-        /* --- Layout --- */
+        nav a {
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-weight: 500;
+            text-transform: uppercase;
+            font-size: 0.78rem;
+            letter-spacing: 3px;
+            transition: all var(--transition-smooth);
+            position: relative;
+            padding: 0.3rem 0;
+            font-family: 'Inter', 'Helvetica Neue', sans-serif;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 1.5px;
+            background: var(--accent-gold);
+            transition: width var(--transition-smooth);
+            border-radius: 1px;
+        }
+
+        nav a:hover {
+            color: var(--accent-cream);
+            text-shadow: 0 0 20px var(--glow-gold);
+        }
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        nav a.external-link {
+            color: var(--accent-gold-light);
+            letter-spacing: 2.5px;
+        }
+        nav a.external-link:hover {
+            color: var(--accent-cream);
+            text-shadow: 0 0 25px rgba(200, 150, 76, 0.5);
+        }
+
+        /* ── Main Layout ── */
         main {
-            max-width: 900px;
-            margin: 4rem auto;
+            max-width: 960px;
+            margin: 3rem auto;
             padding: 0 2rem;
-        }
-        
-        section {
-            margin-bottom: 5rem;
-            padding-top: 2rem; /* Buffer for sticky nav */
-        }
-        
-        h2 {
-            font-size: 2rem;
-            color: var(--text-main);
-            font-weight: normal;
-            margin-bottom: 2rem;
             position: relative;
         }
-        
+
+        section {
+            margin-bottom: 5.5rem;
+            padding-top: 1.5rem;
+            position: relative;
+        }
+
+        h2 {
+            font-family: 'Playfair Display', 'Georgia', serif;
+            font-size: 2.2rem;
+            color: var(--accent-cream);
+            font-weight: 500;
+            margin-bottom: 0.6rem;
+            position: relative;
+            letter-spacing: 0.02em;
+            display: inline-block;
+        }
+
         h2::after {
             content: '';
             display: block;
-            width: 50px;
+            width: 55px;
             height: 2px;
-            background-color: var(--accent-primary);
+            background: linear-gradient(90deg, var(--accent-gold), var(--accent-amber), transparent);
             margin-top: 10px;
+            border-radius: 1px;
         }
 
-        /* --- Post Grids & Cards --- */
+        .section-intro {
+            color: var(--text-muted);
+            margin-bottom: 2.5rem;
+            font-style: italic;
+            font-size: 1.05rem;
+            letter-spacing: 0.02em;
+            border-left: 2px solid rgba(200, 150, 76, 0.3);
+            padding-left: 1.2rem;
+        }
+
+        /* ── Grid & Cards ── */
         .grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
             gap: 2rem;
         }
-        
+
         .card {
-            background: #ffffff;
-            padding: 2rem;
-            border: 1px solid var(--border-color);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            background: var(--bg-card);
+            padding: 2.2rem;
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-md);
+            transition: all var(--transition-glide);
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--shadow-card);
+            cursor: default;
         }
-        
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg,
+                    transparent,
+                    rgba(200, 150, 76, 0.4),
+                    rgba(200, 150, 76, 0.1),
+                    transparent);
+            opacity: 0;
+            transition: opacity var(--transition-smooth);
+        }
+
+        .card::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: var(--radius-md);
+            opacity: 0;
+            transition: opacity var(--transition-smooth);
+            background: radial-gradient(ellipse at 50% 0%, rgba(200, 150, 76, 0.06) 0%, transparent 60%);
+            pointer-events: none;
+        }
+
         .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
-            border-color: var(--accent-secondary);
+            transform: translateY(-6px);
+            box-shadow: var(--shadow-elevated), 0 0 40px rgba(200, 150, 76, 0.06);
+            border-color: var(--border-medium);
         }
-        
+        .card:hover::before {
+            opacity: 1;
+        }
+        .card:hover::after {
+            opacity: 1;
+        }
+
         .card h3 {
             margin-top: 0;
-            font-size: 1.4rem;
-            color: var(--accent-secondary);
+            font-size: 1.5rem;
+            color: var(--accent-cream);
+            font-weight: 500;
+            font-family: 'Playfair Display', 'Georgia', serif;
+            letter-spacing: 0.01em;
+            position: relative;
+            z-index: 1;
         }
-        
+
+        .card p {
+            position: relative;
+            z-index: 1;
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+
         .date {
-            font-size: 0.85rem;
-            color: var(--text-muted);
+            font-size: 0.8rem;
+            color: var(--accent-gold-light);
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 2.5px;
             display: block;
             margin-bottom: 1rem;
+            font-family: 'JetBrains Mono', 'Inter', monospace;
+            font-weight: 400;
+            position: relative;
+            z-index: 1;
         }
 
         .read-more {
-            display: inline-block;
-            margin-top: 1rem;
-            color: var(--accent-primary);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 1.2rem;
+            color: var(--accent-gold);
             text-decoration: none;
-            font-weight: bold;
-            font-size: 0.9rem;
-            letter-spacing: 1px;
+            font-weight: 500;
+            font-size: 0.85rem;
+            letter-spacing: 2px;
             text-transform: uppercase;
+            font-family: 'Inter', 'Helvetica Neue', sans-serif;
+            transition: all var(--transition-smooth);
+            position: relative;
+            z-index: 1;
+            padding: 0.5rem 0;
+        }
+
+        .read-more::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--accent-gold);
+            transition: width var(--transition-smooth);
         }
 
         .read-more:hover {
-            text-decoration: underline;
+            color: var(--accent-cream);
+            gap: 0.9rem;
+            text-shadow: 0 0 20px var(--glow-gold);
+        }
+        .read-more:hover::after {
+            width: 100%;
         }
 
-        /* --- Profile/Bio Section --- */
+        /* ── Bio Box ── */
         .bio-box {
-            background: #ffffff;
-            border-left: 4px solid var(--accent-secondary);
-            padding: 2rem;
-            margin-bottom: 4rem;
+            background: var(--bg-elevated);
+            border-left: 3px solid var(--accent-gold);
+            border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
+            padding: 2.5rem 2.5rem;
+            margin-bottom: 4.5rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 2rem;
+            box-shadow: var(--shadow-card);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .bio-box::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(200, 150, 76, 0.05) 0%, transparent 70%);
+            pointer-events: none;
+            border-radius: 50%;
+        }
+
+        .bio-box .bio-icon {
+            flex-shrink: 0;
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            background: rgba(200, 150, 76, 0.1);
             display: flex;
             align-items: center;
-            gap: 2rem;
+            justify-content: center;
+            font-size: 1.8rem;
+            border: 1px solid rgba(200, 150, 76, 0.3);
+            color: var(--accent-gold-light);
         }
 
-        /* --- Footer --- */
+        .bio-box p {
+            margin: 0.4rem 0;
+            color: var(--text-secondary);
+            position: relative;
+            z-index: 1;
+            line-height: 1.9;
+        }
+        .bio-box p strong {
+            color: var(--accent-cream);
+            font-weight: 600;
+            letter-spacing: 0.02em;
+        }
+
+        /* ── Scrapbook card accent ── */
+        .card.scrapbook-entry {
+            border-left: 3px solid var(--accent-gold);
+            border-radius: 0 var(--radius-md) var(--radius-md) 0;
+        }
+
+        /* ── Footer ── */
         footer {
             text-align: center;
-            padding: 4rem 2rem;
-            border-top: 1px solid var(--border-color);
+            padding: 3.5rem 2rem;
+            border-top: 1px solid var(--border-subtle);
             color: var(--text-muted);
             font-size: 0.9rem;
             margin-top: 4rem;
+            position: relative;
+            letter-spacing: 0.04em;
+            font-family: 'Inter', 'Helvetica Neue', sans-serif;
+            font-weight: 300;
+        }
+
+        footer::before {
+            content: '';
+            display: block;
+            width: 40px;
+            height: 1px;
+            background: var(--accent-gold);
+            margin: 0 auto 1.5rem;
+            opacity: 0.5;
+            border-radius: 1px;
+        }
+
+        footer p {
+            line-height: 2;
+        }
+        footer strong {
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        /* ── Decorative section dividers ── */
+        .section-divider {
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(90deg,
+                    transparent,
+                    rgba(200, 150, 76, 0.2),
+                    rgba(200, 150, 76, 0.35),
+                    rgba(200, 150, 76, 0.2),
+                    transparent);
+            margin: 1rem 0 3rem;
+            border: none;
+        }
+
+        /* ── Glow accent dot ── */
+        .accent-dot {
+            display: inline-block;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--accent-gold);
+            margin: 0 0.6rem;
+            vertical-align: middle;
+            box-shadow: 0 0 10px var(--glow-gold);
+            animation: dotGlow 3s ease-in-out infinite;
+        }
+
+        @keyframes dotGlow {
+            0%,
+            100% {
+                box-shadow: 0 0 6px var(--glow-gold);
+            }
+            50% {
+                box-shadow: 0 0 18px rgba(200, 150, 76, 0.55), 0 0 35px rgba(200, 150, 76, 0.2);
+            }
+        }
+
+        /* ── Scrollbar ── */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg-deep);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(180, 140, 100, 0.3);
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(200, 150, 76, 0.5);
+        }
+
+        /* ── Selection ── */
+        ::selection {
+            background: rgba(200, 150, 76, 0.3);
+            color: var(--accent-cream);
+        }
+
+        /* ── Responsive ── */
+        @media (max-width: 768px) {
+            header {
+                padding: 3rem 1.5rem 2rem;
+            }
+            h1 {
+                font-size: 2.2rem;
+            }
+            .subtitle {
+                font-size: 1rem;
+            }
+            nav {
+                gap: 1.5rem;
+                padding: 1rem;
+            }
+            nav a {
+                font-size: 0.7rem;
+                letter-spacing: 2px;
+            }
+            main {
+                padding: 0 1.2rem;
+                margin: 2rem auto;
+            }
+            .grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            .card {
+                padding: 1.5rem;
+            }
+            .bio-box {
+                flex-direction: column;
+                gap: 1rem;
+                padding: 1.8rem;
+            }
+            h2 {
+                font-size: 1.7rem;
+            }
+            .card h3 {
+                font-size: 1.3rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 1.8rem;
+            }
+            nav {
+                gap: 1rem;
+            }
+            nav a {
+                font-size: 0.65rem;
+                letter-spacing: 1.5px;
+            }
+            .card {
+                padding: 1.2rem;
+            }
+            .bio-box {
+                padding: 1.3rem;
+            }
         }
     </style>
 </head>
 <body>
 
-    <header>
-        <h1>The Intellectual Sandbox</h1>
-        <p class="subtitle">Notes, essays, and research from a quiet corner of West Bengal.</p>
-    </header>
+    <!-- ── Floating Particles ── -->
+    <div class="particles-container" id="particles" aria-hidden="true"></div>
 
-    <nav>
-        <a href="#about">About</a>
-        <a href="#essays">Essays</a>
-        <a href="#research">Research</a>
-        <a href="#scrapbook">Scrapbook</a>
-        <a href="https://students.iiserkol.ac.in/~sm22ms013/" target="_blank" rel="noopener noreferrer">IISER Profile ↗</a>
-    </nav>
+    <div class="main-wrapper">
 
-    <main>
-        <div class="bio-box" id="about">
-            <div>
-                <p><strong>Hello. I am an independent thinker and student at IISER Kolkata.</strong></p>
-                <p>I built this digital garden as an antidote to algorithmic feeds and the decline of platforms like Quora. This is my personal archive. No likes, no metrics, just a space for deep thought, scientific inquiry, and raw observation.</p>
-            </div>
-        </div>
+        <header>
+            <span class="header-ornament" aria-hidden="true"></span>
+            <h1>The Intellectual Sandbox</h1>
+            <p class="subtitle">Notes, essays, and research from a quiet corner of West Bengal.</p>
+        </header>
 
-        <section id="essays">
-            <h2>Essays & Insights</h2>
-            <p style="color: var(--text-muted); margin-bottom: 2rem;"><em>Long-form explorations of philosophy, society, and the modern web.</em></p>
-            
-            <div class="grid">
-                <div class="card">
-                    <span class="date">April 2026</span>
-                    <h3>The Death of the Intellectual Web</h3>
-                    <p>An exploration of why platforms that once fostered intellect have faded into noise, and why personal websites are the necessary cure...</p>
-                    <a href="#" class="read-more">Read Essay →</a>
-                </div>
-                <div class="card">
-                    <span class="date">March 2026</span>
-                    <h3>Reclaiming Focus in a Distracted World</h3>
-                    <p>Thoughts on stepping away from social media and restructuring my environment for deep work and genuine creativity.</p>
-                    <a href="#" class="read-more">Read Essay →</a>
+        <nav>
+            <a href="#about">About</a>
+            <span class="accent-dot" aria-hidden="true"></span>
+            <a href="#essays">Essays</a>
+            <span class="accent-dot" aria-hidden="true"></span>
+            <a href="#research">Research</a>
+            <span class="accent-dot" aria-hidden="true"></span>
+            <a href="#scrapbook">Scrapbook</a>
+            <a href="https://students.iiserkol.ac.in/~sm22ms013/" target="_blank" rel="noopener noreferrer" class="external-link">IISER Profile ↗</a>
+        </nav>
+
+        <main>
+            <!-- ── About / Bio ── -->
+            <div class="bio-box" id="about">
+                <div class="bio-icon" aria-hidden="true">☙</div>
+                <div>
+                    <p><strong>Hello. I am an independent thinker and student at IISER Kolkata.</strong></p>
+                    <p>I built this digital garden as an antidote to algorithmic feeds and the decline of platforms like Quora. This is my personal archive. No likes, no metrics, just a space for deep thought, scientific inquiry, and raw observation.</p>
                 </div>
             </div>
-        </section>
 
-        <section id="research">
-            <h2>Academic & Research</h2>
-            <p style="color: var(--text-muted); margin-bottom: 2rem;"><em>Notes from my time at IISER Kolkata.</em></p>
-            
-            <div class="card">
-                <h3>Current Studies & Interests</h3>
-                <p>Documenting my ongoing coursework, literature reviews, and scientific observations. This space serves as a bridge between my formal education and independent inquiry.</p>
-            </div>
-        </section>
+            <!-- ── Essays ── -->
+            <section id="essays">
+                <h2>Essays &amp; Insights</h2>
+                <p class="section-intro">Long-form explorations of philosophy, society, and the modern web.</p>
+                <div class="grid">
+                    <div class="card">
+                        <span class="date">April 2026</span>
+                        <h3>The Death of the Intellectual Web</h3>
+                        <p>An exploration of why platforms that once fostered intellect have faded into noise, and why personal websites are the necessary cure.</p>
+                        <a href="#" class="read-more">Read Essay <span aria-hidden="true">→</span></a>
+                    </div>
+                    <div class="card">
+                        <span class="date">March 2026</span>
+                        <h3>Reclaiming Focus in a Distracted World</h3>
+                        <p>Thoughts on stepping away from social media and restructuring my environment for deep work and genuine creativity.</p>
+                        <a href="#" class="read-more">Read Essay <span aria-hidden="true">→</span></a>
+                    </div>
+                </div>
+            </section>
 
-        <section id="scrapbook">
-            <h2>The Scrapbook</h2>
-            <p style="color: var(--text-muted); margin-bottom: 2rem;"><em>Shorter fragments, daily logs, and local observations.</em></p>
+            <hr class="section-divider" aria-hidden="true">
 
-            <div class="card" style="border-left: 3px solid var(--accent-primary);">
-                <span class="date">April 6, 2026</span>
-                <p>Morning in West Bengal. The quiet before the campus fully wakes up is the best time for structuring new ideas. Finally moving my thoughts off external platforms and into this self-hosted space.</p>
-            </div>
-        </section>
-    </main>
+            <!-- ── Research ── -->
+            <section id="research">
+                <h2>Academic &amp; Research</h2>
+                <p class="section-intro">Notes from my time at IISER Kolkata.</p>
+                <div class="card">
+                    <h3>Current Studies &amp; Interests</h3>
+                    <p>Documenting my ongoing coursework, literature reviews, and scientific observations. This space serves as a bridge between my formal education and independent inquiry.</p>
+                </div>
+            </section>
 
-    <footer>
-        <p>Built with intention. Curated by sm22ms013.<br>Hosted independently via GitHub Pages.</p>
-    </footer>
+            <hr class="section-divider" aria-hidden="true">
+
+            <!-- ── Scrapbook ── -->
+            <section id="scrapbook">
+                <h2>The Scrapbook</h2>
+                <p class="section-intro">Shorter fragments, daily logs, and local observations.</p>
+                <div class="card scrapbook-entry">
+                    <span class="date">April 6, 2026</span>
+                    <p>Morning in West Bengal. The quiet before the campus fully wakes up is the best time for structuring new ideas. Finally moving my thoughts off external platforms and into this self-hosted space.</p>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <p>Built with intention. Curated by <strong>sm22ms013</strong>.<br>Hosted independently via GitHub Pages.</p>
+        </footer>
+
+    </div>
+
+    <!-- ── Particle Generation Script ── -->
+    <script>
+        (function() {
+            const container = document.getElementById('particles');
+            const particleCount = 35;
+            const colors = [
+                'rgba(200,150,76,0.55)',
+                'rgba(200,150,76,0.4)',
+                'rgba(220,180,110,0.35)',
+                'rgba(180,130,80,0.45)',
+                'rgba(200,160,100,0.3)',
+                'rgba(190,140,70,0.5)',
+            ];
+
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                const size = Math.random() * 3.5 + 1.2;
+                particle.style.width = size + 'px';
+                particle.style.height = size + 'px';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                particle.style.boxShadow =
+                    `0 0 ${size * 4}px ${particle.style.backgroundColor.replace('0.', '0.').replace(/[\d.]+\)$/, '0.6)')}`;
+                const duration = Math.random() * 18 + 14;
+                const delay = Math.random() * 20;
+                particle.style.animationDuration = duration + 's';
+                particle.style.animationDelay = delay + 's';
+                if (Math.random() > 0.5) {
+                    particle.style.animationName = 'floatUpAlt';
+                }
+                container.appendChild(particle);
+            }
+        })();
+    </script>
 
 </body>
 </html>
