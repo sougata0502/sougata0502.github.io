@@ -33,6 +33,7 @@
             --header-font: 'Playfair Display', 'Georgia', serif;
             --body-font: 'Cormorant Garamond', 'Georgia', serif;
             --accent-font: 'Lora', 'Georgia', serif;
+            --sidebar-width: 260px;
         }
 
         * {
@@ -43,7 +44,6 @@
 
         html {
             scroll-behavior: smooth;
-            scroll-padding-top: 100px;
         }
 
         body {
@@ -55,17 +55,45 @@
             font-weight: 400;
             letter-spacing: 0.01em;
             -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
+            cursor: none;
+            display: flex;
+            min-height: 100vh;
             background-image:
                 radial-gradient(ellipse at 30% 10%, rgba(180, 139, 58, 0.06) 0%, transparent 50%),
                 radial-gradient(ellipse at 70% 90%, rgba(180, 139, 58, 0.04) 0%, transparent 55%),
                 url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23c9a050' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
             background-attachment: fixed;
+            position: relative;
         }
 
-        /* ── Decorative background pattern (subtle damask) ── */
-        body::after {
-            content: '';
+        /* Custom cursor */
+        #custom-cursor {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 24px;
+            height: 24px;
+            border: 2px solid var(--gold-primary);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            transition: width 0.2s, height 0.2s, background-color 0.2s, border-color 0.2s;
+            transform: translate(-50%, -50%);
+            mix-blend-mode: normal;
+            background: transparent;
+            backdrop-filter: none;
+            box-shadow: 0 0 12px rgba(180,139,58,0.3);
+        }
+        #custom-cursor.hover {
+            width: 38px;
+            height: 38px;
+            background: rgba(180,139,58,0.08);
+            border-color: var(--royal-burgundy);
+            box-shadow: 0 0 20px rgba(180,139,58,0.5);
+        }
+
+        /* Floating gold particles */
+        .particles {
             position: fixed;
             top: 0;
             left: 0;
@@ -73,176 +101,168 @@
             height: 100%;
             pointer-events: none;
             z-index: 0;
-            opacity: 0.25;
-            background-image:
-                repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(180,139,58,0.02) 2px, rgba(180,139,58,0.02) 4px),
-                repeating-linear-gradient(90deg, transparent, transparent 2px, rgba(180,139,58,0.02) 2px, rgba(180,139,58,0.02) 4px);
         }
-
-        /* ── Main wrapper ── */
-        .main-wrapper {
-            position: relative;
-            z-index: 2;
-        }
-
-        /* ── Header ── */
-        header {
-            text-align: center;
-            padding: 5rem 2rem 2.5rem;
-            position: relative;
-        }
-        .header-top-ornament {
-            display: block;
-            margin: 0 auto 1.5rem;
-            width: 70px;
-            height: 70px;
-            position: relative;
-        }
-        .header-top-ornament::before {
-            content: '⚜';
-            font-size: 2.4rem;
-            color: var(--gold-primary);
+        .particle {
             position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            text-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            background: var(--gold-pale);
+            border-radius: 50%;
+            opacity: 0;
+            animation: floatUp linear infinite;
         }
-        h1 {
-            font-family: var(--header-font);
-            font-size: clamp(2.8rem, 6vw, 4.8rem);
-            font-weight: 600;
-            margin: 0 0 0.8rem;
-            letter-spacing: 0.04em;
-            color: var(--royal-burgundy);
-            text-shadow: 0 1px 2px rgba(0,0,0,0.05);
-            position: relative;
-        }
-        .subtitle {
-            font-family: var(--accent-font);
-            color: var(--text-subtle);
-            font-style: italic;
-            font-size: 1.2rem;
-            max-width: 600px;
-            margin: 0 auto;
-            font-weight: 400;
-            letter-spacing: 0.05em;
-        }
-        .gold-divider {
-            width: 120px;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, var(--gold-primary), transparent);
-            margin: 1.8rem auto 0;
-            border-radius: 1px;
+        @keyframes floatUp {
+            0% { transform: translateY(105vh) translateX(0) scale(0); opacity: 0; }
+            8% { opacity: 0.6; }
+            25% { opacity: 0.3; }
+            60% { opacity: 0.05; }
+            100% { transform: translateY(-10vh) translateX(30px) scale(1.8); opacity: 0; }
         }
 
-        /* ── Navigation ── */
-        nav {
+        /* Sidebar */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: var(--sidebar-width);
+            height: 100vh;
+            background: rgba(255, 254, 249, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-right: 1px solid var(--border-gold);
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
-            flex-wrap: wrap;
-            gap: 1.8rem;
-            padding: 1rem 2.5rem;
-            margin: 0 auto;
-            max-width: fit-content;
-            background: rgba(253, 250, 243, 0.8);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid var(--border-gold);
-            border-radius: 50px;
-            position: sticky;
-            top: 25px;
-            z-index: 500;
-            box-shadow: var(--shadow-md), 0 0 0 1px rgba(255,255,255,0.5) inset;
+            z-index: 100;
+            padding: 3rem 1.5rem;
+            box-shadow: 2px 0 20px rgba(0,0,0,0.03);
+            transition: transform 0.4s ease;
         }
-        nav a {
-            text-decoration: none;
-            color: var(--text-muted);
-            font-weight: 500;
-            text-transform: uppercase;
-            font-size: 0.72rem;
-            letter-spacing: 3px;
-            transition: all var(--transition-ease);
-            font-family: var(--accent-font);
-            padding: 0.2rem 0;
-            position: relative;
+        .sidebar-logo {
+            margin-bottom: 3rem;
+            text-align: center;
         }
-        nav a::after {
-            content: '';
-            position: absolute;
-            bottom: -3px;
-            left: 0;
-            width: 0;
-            height: 1.5px;
-            background: var(--gold-primary);
-            transition: width var(--transition-ease);
-            border-radius: 1px;
+        .sidebar-logo .fleuron {
+            font-size: 3rem;
+            color: var(--gold-primary);
+            margin-bottom: 0.5rem;
         }
-        nav a:hover {
+        .sidebar-logo h1 {
+            font-family: var(--header-font);
+            font-size: 1.5rem;
             color: var(--royal-burgundy);
+            font-weight: 600;
+            letter-spacing: 0.06em;
+            line-height: 1.2;
         }
-        nav a:hover::after {
+        .sidebar nav {
+            display: flex;
+            flex-direction: column;
+            gap: 1.8rem;
             width: 100%;
         }
-        nav a.external-link {
-            color: var(--gold-primary);
+        .sidebar nav a {
+            text-decoration: none;
+            color: var(--text-muted);
+            font-family: var(--accent-font);
+            font-weight: 500;
+            font-size: 0.85rem;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+        .sidebar nav a .dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--gold-pale);
+            transition: background 0.3s;
+        }
+        .sidebar nav a:hover {
+            color: var(--royal-burgundy);
+            background: rgba(180,139,58,0.05);
+        }
+        .sidebar nav a.active {
+            color: var(--royal-burgundy);
             font-weight: 600;
+            background: rgba(180,139,58,0.08);
         }
-        .nav-separator {
-            color: var(--gold-pale);
+        .sidebar nav a.active .dot {
+            background: var(--gold-primary);
+            box-shadow: 0 0 8px var(--gold-light);
+        }
+        .sidebar-footer {
+            margin-top: auto;
             font-size: 0.7rem;
-            opacity: 0.7;
+            color: var(--text-subtle);
+            letter-spacing: 1px;
+            text-align: center;
+        }
+        .mobile-toggle {
+            display: none;
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 200;
+            font-size: 1.8rem;
+            color: var(--gold-primary);
+            background: rgba(255,254,249,0.9);
+            border: 1px solid var(--border-gold);
+            border-radius: 8px;
+            padding: 0.3rem 0.8rem;
+            cursor: pointer;
         }
 
-        /* ── Main content ── */
-        main {
-            max-width: 1000px;
-            margin: 3.5rem auto;
-            padding: 0 2rem;
+        /* Main content area */
+        .main-content {
+            margin-left: var(--sidebar-width);
+            flex: 1;
+            padding: 3rem 3rem 2rem;
+            position: relative;
+            z-index: 5;
+            transition: margin-left 0.4s ease;
         }
-
-        section {
-            margin-bottom: 5rem;
-            animation: fadeRise 0.8s ease-out forwards;
-            opacity: 0;
+        .page {
+            display: none;
+            animation: fadeInPage 0.5s ease forwards;
         }
-        @keyframes fadeRise {
-            from { opacity: 0; transform: translateY(25px); }
+        .page.active {
+            display: block;
+        }
+        @keyframes fadeInPage {
+            from { opacity: 0; transform: translateY(15px); }
             to { opacity: 1; transform: translateY(0); }
         }
-        section:nth-child(2) { animation-delay: 0.15s; }
-        section:nth-child(3) { animation-delay: 0.3s; }
-        section:nth-child(4) { animation-delay: 0.45s; }
 
         h2 {
             font-family: var(--header-font);
-            font-size: 2.5rem;
+            font-size: 2.8rem;
             color: var(--royal-burgundy);
             font-weight: 600;
-            margin-bottom: 0.4rem;
+            margin-bottom: 0.5rem;
             letter-spacing: 0.03em;
-            display: inline-block;
         }
         .section-underline {
-            display: block;
-            width: 55px;
+            width: 60px;
             height: 3px;
             background: var(--gold-primary);
-            margin: 0.5rem 0 2rem;
+            margin-bottom: 2rem;
             border-radius: 2px;
         }
         .section-intro {
             color: var(--text-muted);
             font-style: italic;
-            font-size: 1.05rem;
+            font-size: 1.1rem;
             margin-bottom: 2.5rem;
             padding-left: 1.2rem;
             border-left: 3px solid var(--gold-pale);
-            letter-spacing: 0.02em;
         }
 
-        /* ── Cards ── */
         .grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
@@ -261,10 +281,7 @@
         .card::before {
             content: '';
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            inset: 0;
             background: radial-gradient(circle at 50% 0%, rgba(180,139,58,0.06) 0%, transparent 70%);
             opacity: 0;
             transition: opacity 0.5s;
@@ -276,17 +293,13 @@
             box-shadow: var(--shadow-lg);
             transform: translateY(-4px);
         }
-        .card:hover::before {
-            opacity: 1;
-        }
+        .card:hover::before { opacity: 1; }
         .card h3 {
             font-family: var(--header-font);
-            font-size: 1.5rem;
-            margin-top: 0;
+            font-size: 1.6rem;
             color: var(--royal-burgundy);
             font-weight: 600;
-            letter-spacing: 0.03em;
-            position: relative;
+            margin-bottom: 0.8rem;
         }
         .date {
             font-family: var(--accent-font);
@@ -296,105 +309,66 @@
             letter-spacing: 2.5px;
             display: block;
             margin-bottom: 1rem;
-            font-weight: 500;
         }
-        .card p {
-            color: var(--text-dark);
-            line-height: 1.85;
-            position: relative;
-        }
-        .read-more {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.4rem;
-            margin-top: 1.4rem;
-            color: var(--gold-primary);
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 0.8rem;
-            letter-spacing: 1.8px;
-            text-transform: uppercase;
-            font-family: var(--accent-font);
-            transition: all var(--transition-ease);
-            border-bottom: 1px solid transparent;
-            padding-bottom: 2px;
-        }
-        .read-more:hover {
-            color: var(--royal-burgundy);
-            border-bottom-color: var(--gold-primary);
-            gap: 0.7rem;
-        }
-
-        /* ── Bio Box ── */
         .bio-box {
             background: var(--card-bg);
-            border: 1px solid var(--border-soft);
             border-left: 5px solid var(--gold-primary);
             border-radius: 0 var(--radius-card) var(--radius-card) 0;
             padding: 2.5rem;
-            margin-bottom: 4rem;
             display: flex;
-            align-items: flex-start;
             gap: 2rem;
+            align-items: flex-start;
             box-shadow: var(--shadow-sm);
-            animation: fadeRise 0.8s ease-out forwards;
-            opacity: 0;
-            animation-delay: 0.05s;
         }
         .bio-icon {
-            flex-shrink: 0;
-            width: 56px;
-            height: 56px;
-            background: rgba(180,139,58,0.07);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            font-size: 2.5rem;
+            color: var(--gold-primary);
+        }
+
+        /* Bottom gateway */
+        .gateway {
+            margin-top: 5rem;
+            border-top: 1px solid var(--border-soft);
+            padding-top: 3rem;
+        }
+        .gateway h2 {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+        }
+        .gateway-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+        .gateway-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-soft);
+            border-radius: var(--radius-sm);
+            padding: 1.8rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow-sm);
+        }
+        .gateway-card:hover {
+            border-color: var(--gold-primary);
+            box-shadow: var(--shadow-md);
+            transform: translateY(-3px);
+        }
+        .gateway-card .icon {
             font-size: 2rem;
             color: var(--gold-primary);
-            border: 1px solid var(--border-gold);
+            margin-bottom: 0.6rem;
         }
-        .bio-text p {
-            margin: 0.3rem 0;
-            color: var(--text-dark);
-        }
-        .bio-text strong {
+        .gateway-card h4 {
+            font-family: var(--header-font);
+            font-size: 1.1rem;
             color: var(--royal-burgundy);
             font-weight: 600;
+            margin-bottom: 0.3rem;
         }
 
-        /* ── Scrapbook card accent ── */
-        .card.scrapbook-entry {
-            border-left: 4px solid var(--gold-primary);
-            border-radius: 0 var(--radius-card) var(--radius-card) 0;
-        }
-
-        /* ── Footer ── */
-        footer {
-            text-align: center;
-            padding: 3.5rem 2rem;
-            border-top: 1px solid var(--border-soft);
-            color: var(--text-muted);
-            font-size: 0.9rem;
-            font-family: var(--accent-font);
-            letter-spacing: 0.04em;
-            margin-top: 3rem;
-            position: relative;
-        }
-        footer::before {
-            content: '❧';
-            display: block;
-            font-size: 1.6rem;
-            color: var(--gold-primary);
-            margin-bottom: 1.2rem;
-            opacity: 0.7;
-        }
-        footer strong {
-            color: var(--royal-burgundy);
-            font-weight: 600;
-        }
-
-        /* ── Scroll to top ── */
+        /* Scroll to top */
         #scroll-top-btn {
             position: fixed;
             bottom: 35px;
@@ -412,7 +386,7 @@
             cursor: pointer;
             z-index: 800;
             box-shadow: var(--shadow-sm);
-            transition: all var(--transition-ease);
+            transition: all 0.3s;
             opacity: 0;
             visibility: hidden;
             transform: translateY(15px);
@@ -426,64 +400,68 @@
             background: rgba(180,139,58,0.08);
             border-color: var(--gold-primary);
             color: var(--royal-burgundy);
-            box-shadow: var(--shadow-md);
         }
 
-        /* ── Scrollbar ── */
-        ::-webkit-scrollbar { width: 7px; }
-        ::-webkit-scrollbar-track { background: #f3eee3; }
-        ::-webkit-scrollbar-thumb { background: rgba(180,139,58,0.4); border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: rgba(180,139,58,0.7); }
-        ::selection { background: rgba(180,139,58,0.2); color: #2e241a; }
-
-        /* ── Responsive ── */
-        @media (max-width: 768px) {
-            header { padding: 3.5rem 1.5rem 2rem; }
-            h1 { font-size: 2.5rem; }
-            nav { gap: 1rem; padding: 0.8rem 1.8rem; }
-            nav a { font-size: 0.65rem; letter-spacing: 2px; }
-            main { padding: 0 1.5rem; }
-            .grid { grid-template-columns: 1fr; }
-            .bio-box { flex-direction: column; gap: 1.2rem; padding: 2rem; }
-            h2 { font-size: 2rem; }
-        }
-        @media (max-width: 480px) {
-            h1 { font-size: 2rem; }
-            nav { gap: 0.5rem; padding: 0.6rem 1.2rem; }
-            nav a { font-size: 0.6rem; }
+        /* Responsive */
+        @media (max-width: 900px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+            .sidebar.open {
+                transform: translateX(0);
+            }
+            .main-content {
+                margin-left: 0;
+                padding: 2rem 1.5rem;
+            }
+            .mobile-toggle {
+                display: block;
+            }
+            h2 { font-size: 2.2rem; }
+            .gateway-grid { grid-template-columns: repeat(2,1fr); }
         }
     </style>
 </head>
 <body>
-<div class="main-wrapper">
-    <header>
-        <div class="header-top-ornament" aria-hidden="true"></div>
-        <h1>The Intellectual Sandbox</h1>
-        <p class="subtitle">Notes, essays, and research from a quiet corner of West Bengal.</p>
-        <div class="gold-divider"></div>
-    </header>
+    <div class="particles" id="particles"></div>
+    <div id="custom-cursor"></div>
 
-    <nav>
-        <a href="#about">About</a>
-        <span class="nav-separator">•</span>
-        <a href="#essays">Essays</a>
-        <span class="nav-separator">•</span>
-        <a href="#research">Research</a>
-        <span class="nav-separator">•</span>
-        <a href="#scrapbook">Scrapbook</a>
-        <a href="https://students.iiserkol.ac.in/~sm22ms013/" target="_blank" rel="noopener noreferrer" class="external-link">IISER ↗</a>
-    </nav>
+    <!-- Mobile menu toggle -->
+    <div class="mobile-toggle" id="mobileToggle">☰</div>
 
-    <main>
-        <div class="bio-box" id="about">
-            <div class="bio-icon">☙</div>
-            <div class="bio-text">
-                <p><strong>Hello. I am an independent thinker and student at IISER Kolkata.</strong></p>
-                <p>I built this digital garden as an antidote to algorithmic feeds and the decline of platforms like Quora. This is my personal archive. No likes, no metrics, just a space for deep thought, scientific inquiry, and raw observation.</p>
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-logo">
+            <div class="fleuron">⚜</div>
+            <h1>The Intellectual<br>Sandbox</h1>
+        </div>
+        <nav>
+            <a href="#" data-page="about" class="active"><span class="dot"></span> About</a>
+            <a href="#" data-page="essays"><span class="dot"></span> Essays</a>
+            <a href="#" data-page="research"><span class="dot"></span> Research</a>
+            <a href="#" data-page="scrapbook"><span class="dot"></span> Scrapbook</a>
+            <a href="https://students.iiserkol.ac.in/~sm22ms013/" target="_blank" rel="noopener noreferrer" class="external-link"><span class="dot"></span> IISER ↗</a>
+        </nav>
+        <div class="sidebar-footer">Curated by sm22ms013</div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content" id="mainContent">
+        <!-- About Page -->
+        <div class="page active" id="page-about">
+            <h2>About</h2>
+            <div class="section-underline"></div>
+            <div class="bio-box">
+                <div class="bio-icon">☙</div>
+                <div>
+                    <p><strong>Hello. I am an independent thinker and student at IISER Kolkata.</strong></p>
+                    <p>I built this digital garden as an antidote to algorithmic feeds and the decline of platforms like Quora. This is my personal archive. No likes, no metrics, just a space for deep thought, scientific inquiry, and raw observation.</p>
+                </div>
             </div>
         </div>
 
-        <section id="essays">
+        <!-- Essays Page -->
+        <div class="page" id="page-essays">
             <h2>Essays & Insights</h2>
             <div class="section-underline"></div>
             <p class="section-intro">Long-form explorations of philosophy, society, and the modern web.</p>
@@ -492,18 +470,19 @@
                     <span class="date">April 2026</span>
                     <h3>The Death of the Intellectual Web</h3>
                     <p>An exploration of why platforms that once fostered intellect have faded into noise, and why personal websites are the necessary cure.</p>
-                    <a href="#" class="read-more">Read Essay →</a>
+                    <a href="#" class="read-more" style="color:var(--gold-primary); text-transform:uppercase; letter-spacing:1.5px; font-weight:600;">Read Essay →</a>
                 </div>
                 <div class="card">
                     <span class="date">March 2026</span>
                     <h3>Reclaiming Focus in a Distracted World</h3>
                     <p>Thoughts on stepping away from social media and restructuring my environment for deep work and genuine creativity.</p>
-                    <a href="#" class="read-more">Read Essay →</a>
+                    <a href="#" class="read-more" style="color:var(--gold-primary); text-transform:uppercase; letter-spacing:1.5px; font-weight:600;">Read Essay →</a>
                 </div>
             </div>
-        </section>
+        </div>
 
-        <section id="research">
+        <!-- Research Page -->
+        <div class="page" id="page-research">
             <h2>Academic & Research</h2>
             <div class="section-underline"></div>
             <p class="section-intro">Notes from my time at IISER Kolkata.</p>
@@ -511,40 +490,147 @@
                 <h3>Current Studies & Interests</h3>
                 <p>Documenting my ongoing coursework, literature reviews, and scientific observations. This space serves as a bridge between my formal education and independent inquiry.</p>
             </div>
-        </section>
+        </div>
 
-        <section id="scrapbook">
+        <!-- Scrapbook Page -->
+        <div class="page" id="page-scrapbook">
             <h2>The Scrapbook</h2>
             <div class="section-underline"></div>
             <p class="section-intro">Shorter fragments, daily logs, and local observations.</p>
-            <div class="card scrapbook-entry">
+            <div class="card" style="border-left: 4px solid var(--gold-primary);">
                 <span class="date">April 6, 2026</span>
                 <p>Morning in West Bengal. The quiet before the campus fully wakes up is the best time for structuring new ideas. Finally moving my thoughts off external platforms and into this self-hosted space.</p>
             </div>
-        </section>
+        </div>
+
+        <!-- Gateway at bottom -->
+        <div class="gateway">
+            <h2>Explore the Garden</h2>
+            <div class="gateway-grid">
+                <div class="gateway-card" data-page="about">
+                    <div class="icon">📜</div>
+                    <h4>About</h4>
+                    <p style="font-size:0.8rem; color:var(--text-subtle);">The curator & the mission</p>
+                </div>
+                <div class="gateway-card" data-page="essays">
+                    <div class="icon">✍️</div>
+                    <h4>Essays</h4>
+                    <p style="font-size:0.8rem; color:var(--text-subtle);">Deep thoughts</p>
+                </div>
+                <div class="gateway-card" data-page="research">
+                    <div class="icon">🔬</div>
+                    <h4>Research</h4>
+                    <p style="font-size:0.8rem; color:var(--text-subtle);">Academic notes</p>
+                </div>
+                <div class="gateway-card" data-page="scrapbook">
+                    <div class="icon">📖</div>
+                    <h4>Scrapbook</h4>
+                    <p style="font-size:0.8rem; color:var(--text-subtle);">Fragments & logs</p>
+                </div>
+            </div>
+        </div>
     </main>
 
-    <footer>
-        <p>Built with intention. Curated by <strong>sm22ms013</strong>.<br>Hosted independently via GitHub Pages.</p>
-    </footer>
-</div>
+    <button id="scroll-top-btn" aria-label="Scroll to top">↑</button>
 
-<button id="scroll-top-btn" aria-label="Scroll to top">↑</button>
+    <script>
+        (function() {
+            // Page switching
+            const pages = document.querySelectorAll('.page');
+            const navLinks = document.querySelectorAll('.sidebar nav a[data-page]');
+            const gatewayCards = document.querySelectorAll('.gateway-card[data-page]');
+            const mobileToggle = document.getElementById('mobileToggle');
+            const sidebar = document.getElementById('sidebar');
+            const mainContent = document.getElementById('mainContent');
 
-<script>
-    (function() {
-        const scrollBtn = document.getElementById('scroll-top-btn');
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 500) {
-                scrollBtn.classList.add('visible');
-            } else {
-                scrollBtn.classList.remove('visible');
+            function switchPage(pageId) {
+                pages.forEach(p => p.classList.remove('active'));
+                const target = document.getElementById('page-' + pageId);
+                if (target) {
+                    target.classList.add('active');
+                    // re-trigger animation
+                    target.style.animation = 'none';
+                    target.offsetHeight; // reflow
+                    target.style.animation = 'fadeInPage 0.5s ease forwards';
+                }
+                // Update active nav
+                navLinks.forEach(link => {
+                    if (link.dataset.page === pageId) link.classList.add('active');
+                    else link.classList.remove('active');
+                });
+                // Close mobile sidebar if open
+                if (window.innerWidth <= 900) {
+                    sidebar.classList.remove('open');
+                }
+                // Scroll to top of content
+                mainContent.scrollIntoView({ behavior: 'smooth', block: 'start' });
             }
-        });
-        scrollBtn.addEventListener('click', () => {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        });
-    })();
-</script>
+
+            navLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    switchPage(link.dataset.page);
+                });
+            });
+
+            gatewayCards.forEach(card => {
+                card.addEventListener('click', () => {
+                    switchPage(card.dataset.page);
+                });
+            });
+
+            // Mobile toggle
+            mobileToggle.addEventListener('click', () => {
+                sidebar.classList.toggle('open');
+            });
+            // Close sidebar when clicking outside
+            document.addEventListener('click', (e) => {
+                if (window.innerWidth <= 900 && !sidebar.contains(e.target) && e.target !== mobileToggle) {
+                    sidebar.classList.remove('open');
+                }
+            });
+
+            // Custom cursor
+            const cursor = document.getElementById('custom-cursor');
+            document.addEventListener('mousemove', (e) => {
+                cursor.style.transform = `translate(${e.clientX}px, ${e.clientY}px) translate(-50%, -50%)`;
+            });
+            const hoverTargets = document.querySelectorAll('a, button, .card, .gateway-card, .bio-box');
+            hoverTargets.forEach(el => {
+                el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
+                el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
+            });
+            document.addEventListener('mouseleave', () => cursor.style.opacity = '0');
+            document.addEventListener('mouseenter', () => cursor.style.opacity = '1');
+
+            // Floating particles
+            const particlesContainer = document.getElementById('particles');
+            for (let i = 0; i < 25; i++) {
+                const p = document.createElement('div');
+                p.classList.add('particle');
+                const size = Math.random() * 4 + 2;
+                p.style.width = size + 'px';
+                p.style.height = size + 'px';
+                p.style.left = Math.random() * 100 + '%';
+                p.style.animationDuration = Math.random() * 16 + 14 + 's';
+                p.style.animationDelay = Math.random() * 15 + 's';
+                particlesContainer.appendChild(p);
+            }
+
+            // Scroll to top
+            const scrollBtn = document.getElementById('scroll-top-btn');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 500) scrollBtn.classList.add('visible');
+                else scrollBtn.classList.remove('visible');
+            });
+            scrollBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+            // Active page on load
+            const initialPage = window.location.hash.substring(1) || 'about';
+            if (['about','essays','research','scrapbook'].includes(initialPage)) {
+                switchPage(initialPage);
+            }
+        })();
+    </script>
 </body>
 </html>
