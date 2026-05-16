@@ -2,799 +2,490 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Intellectual Sandbox — Lunar Station</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>The Starboard Chronicle — Sea & Sky Logbook</title>
+    <!-- Nautical & Viking inspired fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;500;600&family=Orbitron:wght@400;500;600;700&family=Space+Mono&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500&family=IM+Fell+English:ital@0;1&family=Space+Mono&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --space-void: #020210;
-            --space-deep: #060618;
-            --module-bg: #0d0d1f;
-            --module-bg-alt: #111128;
-            --module-surface: #141430;
-            --lunar-regolith: #3a3a44;
-            --lunar-gray: #6b6b78;
-            --lunar-light: #9a9aa8;
-            --oxygen-blue: #7eb8f4;
-            --oxygen-soft: #a3cffa;
-            --oxygen-pale: #c8e0fb;
-            --glow-blue: #88bbff;
-            --glow-white: #d0d8f0;
-            --accent-copper: #e8956f;
-            --accent-warm: #f4b890;
-            --text-bright: #e8e8f2;
-            --text-body: #c0c0d0;
-            --text-dim: #9090a4;
-            --text-subtle: #6a6a7e;
-            --border-soft: #2e2e48;
-            --border-active: #5a8ab8;
-            --shadow-blue: 0 0 20px rgba(120,170,240,0.3), 0 0 50px rgba(120,170,240,0.1);
-            --shadow-blue-strong: 0 0 16px rgba(140,190,255,0.5), 0 0 40px rgba(140,190,255,0.25);
-            --shadow-white: 0 0 12px rgba(200,210,230,0.4), 0 0 30px rgba(200,210,230,0.15);
-            --transition-smooth: 0.35s cubic-bezier(0.22, 0.61, 0.36, 1);
-            --radius-module: 6px;
-            --header-font: 'Orbitron', 'Exo 2', sans-serif;
-            --body-font: 'Exo 2', 'Segoe UI', sans-serif;
-            --mono-font: 'Space Mono', 'Courier New', monospace;
-            --sidebar-width: 280px;
-        }
-
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-        html {
-            scroll-behavior: smooth;
+
+        :root {
+            --deep-sea: #0a111c;
+            --storm-sky: #141c2c;
+            --driftwood: #2f241b;
+            --old-plank: #4a3727;
+            --brass-gold: #cb9e5b;
+            --tarnished-brass: #b88b47;
+            --sea-foam: #b9cfd4;
+            --salt-spray: #dbe7ed;
+            --parchment-light: #f2eadc;
+            --ink-dark: #2b2620;
+            --wave-teal: #2a6f6f;
+            --rust-red: #bc6f4b;
+            --compass-blue: #628b9b;
+            --runestone-grey: #6c6a6f;
+            --border-rough: #5d4a34;
+            --glow-embers: #e6b87e;
+            --shadow-embers: 0 0 16px rgba(203, 158, 91, 0.3), 0 0 32px rgba(172, 122, 55, 0.2);
+            --shadow-nautical: 0 8px 28px rgba(0, 0, 0, 0.5);
+            --transition-wave: 0.35s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            --sidebar-width: 290px;
+            --header-font: 'Cinzel', 'Georgia', serif;
+            --body-font: 'Cormorant Garamond', 'IM Fell English', serif;
+            --mono-font: 'Space Mono', monospace;
         }
 
         body {
+            background-color: var(--deep-sea);
             font-family: var(--body-font);
-            background-color: var(--space-void);
-            color: var(--text-body);
-            line-height: 1.7;
+            color: #e0dccc;
+            line-height: 1.65;
             font-size: 1.1rem;
             font-weight: 400;
-            letter-spacing: 0.01em;
             cursor: none;
-            display: flex;
             min-height: 100vh;
             position: relative;
             overflow-x: hidden;
+            background-image: 
+                linear-gradient(125deg, rgba(10, 17, 28, 0.88), rgba(20, 28, 44, 0.9)),
+                repeating-linear-gradient(45deg, rgba(75, 55, 38, 0.08) 0px, rgba(75, 55, 38, 0.08) 2px, transparent 2px, transparent 8px),
+                repeating-linear-gradient(135deg, rgba(170, 140, 90, 0.05) 0px, rgba(170, 140, 90, 0.05) 1px, transparent 1px, transparent 12px);
             background-attachment: fixed;
-            background-image:
-                radial-gradient(ellipse at 25% 15%, rgba(100,160,220,0.06) 0%, transparent 50%),
-                radial-gradient(ellipse at 70% 75%, rgba(140,180,220,0.04) 0%, transparent 50%),
-                radial-gradient(ellipse at 50% 50%, rgba(180,200,230,0.03) 0%, transparent 65%),
-                radial-gradient(ellipse at 80% 20%, rgba(200,220,255,0.05) 0%, transparent 40%);
-            background-size: 100% 100%, 100% 100%, 100% 100%, 100% 100%;
         }
 
-        /* Starfield */
+        /* Stormy sky + wave mist overlay */
         body::before {
             content: '';
             position: fixed;
             inset: 0;
             pointer-events: none;
             z-index: 0;
-            background: transparent;
-            box-shadow:
-                2vw 3vh 0 0 rgba(255, 255, 255, 0.9),
-                8vw 7vh 0 1px rgba(220, 230, 255, 0.7),
-                15vw 4vh 0 0 rgba(255, 255, 255, 0.5),
-                22vw 12vh 0 1px rgba(200, 210, 240, 0.8),
-                30vw 6vh 0 0 rgba(255, 255, 255, 0.6),
-                38vw 9vh 0 1px rgba(230, 240, 255, 0.7),
-                45vw 2vh 0 0 rgba(255, 255, 255, 0.4),
-                52vw 14vh 0 1px rgba(210, 220, 245, 0.9),
-                60vw 5vh 0 0 rgba(255, 255, 255, 0.55),
-                68vw 11vh 0 1px rgba(190, 200, 230, 0.6),
-                75vw 3vh 0 0 rgba(255, 255, 255, 0.7),
-                82vw 8vh 0 1px rgba(220, 235, 255, 0.5),
-                90vw 13vh 0 0 rgba(255, 255, 255, 0.65),
-                5vw 20vh 0 1px rgba(240, 245, 255, 0.8),
-                12vw 25vh 0 0 rgba(255, 255, 255, 0.45),
-                20vw 18vh 0 1px rgba(200, 215, 240, 0.7),
-                28vw 30vh 0 0 rgba(255, 255, 255, 0.55),
-                35vw 22vh 0 1px rgba(210, 225, 250, 0.6),
-                42vw 28vh 0 0 rgba(255, 255, 255, 0.75),
-                50vw 16vh 0 1px rgba(230, 240, 255, 0.5),
-                58vw 32vh 0 0 rgba(255, 255, 255, 0.4),
-                65vw 19vh 0 1px rgba(190, 205, 235, 0.8),
-                72vw 26vh 0 0 rgba(255, 255, 255, 0.6),
-                80vw 21vh 0 1px rgba(220, 230, 250, 0.7),
-                88vw 35vh 0 0 rgba(255, 255, 255, 0.5),
-                3vw 38vh 0 1px rgba(200, 215, 245, 0.65),
-                10vw 42vh 0 0 rgba(255, 255, 255, 0.7),
-                18vw 36vh 0 1px rgba(240, 248, 255, 0.55),
-                26vw 44vh 0 0 rgba(255, 255, 255, 0.45),
-                34vw 40vh 0 1px rgba(210, 220, 240, 0.8),
-                41vw 48vh 0 0 rgba(255, 255, 255, 0.6),
-                49vw 38vh 0 1px rgba(190, 200, 230, 0.5),
-                57vw 46vh 0 0 rgba(255, 255, 255, 0.7),
-                64vw 50vh 0 1px rgba(220, 230, 250, 0.65),
-                71vw 42vh 0 0 rgba(255, 255, 255, 0.5),
-                79vw 52vh 0 1px rgba(200, 215, 240, 0.75),
-                87vw 44vh 0 0 rgba(255, 255, 255, 0.55),
-                6vw 55vh 0 1px rgba(230, 240, 255, 0.6),
-                14vw 58vh 0 0 rgba(255, 255, 255, 0.7),
-                23vw 54vh 0 1px rgba(210, 220, 245, 0.5),
-                31vw 60vh 0 0 rgba(255, 255, 255, 0.45),
-                40vw 56vh 0 1px rgba(190, 205, 235, 0.8),
-                48vw 62vh 0 0 rgba(255, 255, 255, 0.65),
-                55vw 53vh 0 1px rgba(220, 235, 255, 0.55),
-                63vw 64vh 0 0 rgba(255, 255, 255, 0.5),
-                70vw 57vh 0 1px rgba(240, 245, 255, 0.7),
-                78vw 66vh 0 0 rgba(255, 255, 255, 0.6),
-                85vw 59vh 0 1px rgba(200, 210, 240, 0.75),
-                92vw 68vh 0 0 rgba(255, 255, 255, 0.4),
-                9vw 72vh 0 1px rgba(210, 225, 250, 0.65),
-                17vw 75vh 0 0 rgba(255, 255, 255, 0.55),
-                25vw 70vh 0 1px rgba(230, 240, 255, 0.6),
-                33vw 78vh 0 0 rgba(255, 255, 255, 0.7),
-                44vw 73vh 0 1px rgba(190, 200, 230, 0.5),
-                53vw 80vh 0 0 rgba(255, 255, 255, 0.45),
-                61vw 74vh 0 1px rgba(220, 230, 250, 0.8),
-                69vw 82vh 0 0 rgba(255, 255, 255, 0.6),
-                76vw 71vh 0 1px rgba(200, 215, 240, 0.55),
-                84vw 79vh 0 0 rgba(255, 255, 255, 0.7),
-                91vw 76vh 0 1px rgba(240, 248, 255, 0.5),
-                4vw 85vh 0 0 rgba(255, 255, 255, 0.65),
-                11vw 88vh 0 1px rgba(210, 220, 245, 0.7),
-                19vw 83vh 0 0 rgba(255, 255, 255, 0.5),
-                27vw 90vh 0 1px rgba(190, 205, 235, 0.6),
-                36vw 86vh 0 0 rgba(255, 255, 255, 0.75),
-                46vw 92vh 0 1px rgba(220, 230, 250, 0.55),
-                54vw 84vh 0 0 rgba(255, 255, 255, 0.4),
-                62vw 91vh 0 1px rgba(230, 240, 255, 0.7),
-                72vw 87vh 0 0 rgba(255, 255, 255, 0.6),
-                80vw 94vh 0 1px rgba(200, 215, 240, 0.5),
-                89vw 89vh 0 0 rgba(255, 255, 255, 0.65);
+            background: radial-gradient(ellipse at 40% 30%, rgba(180, 200, 210, 0.08) 0%, transparent 55%),
+                        radial-gradient(ellipse at 80% 70%, rgba(140, 110, 70, 0.07) 0%, transparent 60%);
+            box-shadow: inset 0 0 120px rgba(0, 0, 0, 0.45);
         }
 
-        /* Subtle lunar horizon glow */
+        /* stars / celestial dust (sailor's sky) */
         body::after {
             content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            background-image: radial-gradient(2px 2px at 12% 8%, #fff3cf, rgba(0,0,0,0)),
+                            radial-gradient(1px 1px at 34% 22%, #ffe6b0, rgba(0,0,0,0)),
+                            radial-gradient(2px 2px at 56% 78%, #fcebb8, rgba(0,0,0,0)),
+                            radial-gradient(1px 1px at 78% 44%, #fff0ce, rgba(0,0,0,0)),
+                            radial-gradient(3px 2px at 88% 33%, #eedd99, rgba(0,0,0,0)),
+                            radial-gradient(2px 2px at 24% 92%, #fff2bf, rgba(0,0,0,0));
+            background-repeat: no-repeat;
+            background-size: 300px 300px;
+            opacity: 0.65;
+            animation: starTwinkle 7s infinite alternate;
+        }
+
+        @keyframes starTwinkle {
+            0% { opacity: 0.4; }
+            100% { opacity: 0.9; }
+        }
+
+        /* sea foam edge */
+        .sea-mist {
             position: fixed;
             bottom: 0;
             left: 0;
             width: 100%;
-            height: 18vh;
+            height: 14vh;
+            background: linear-gradient(to top, rgba(42, 111, 111, 0.2), rgba(10, 17, 28, 0));
             pointer-events: none;
-            z-index: 0;
-            background: linear-gradient(to top,
-                    rgba(100, 110, 130, 0.12) 0%,
-                    rgba(80, 90, 110, 0.05) 30%,
-                    transparent 100%);
+            z-index: 1;
         }
 
+        /* progress bar — like a ship's heading */
         .progress-container {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
-            height: 3px;
+            height: 4px;
             z-index: 999;
-            pointer-events: none;
-            background: rgba(0, 0, 0, 0.5);
+            background: rgba(0,0,0,0.65);
         }
         .progress-bar {
             height: 100%;
-            background: linear-gradient(90deg, var(--oxygen-blue), var(--oxygen-soft), var(--glow-white));
-            box-shadow: 0 0 12px var(--oxygen-blue), 0 0 6px var(--oxygen-soft);
+            background: linear-gradient(90deg, var(--brass-gold), var(--sea-foam), #e9bc7e);
+            box-shadow: 0 0 14px #cb9e5b;
             width: 0%;
-            transition: width 0.1s linear;
-            border-radius: 0 2px 2px 0;
+            transition: width 0.12s linear;
         }
 
+        /* custom spyglass cursor */
         #custom-cursor {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 28px;
-            height: 28px;
+            width: 34px;
+            height: 34px;
+            border: 2px solid rgba(203, 158, 91, 0.9);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
             pointer-events: none;
             z-index: 9999;
-            transform: translate(-50%, -50%);
-            border: 2px solid rgba(180, 200, 230, 0.9);
-            border-radius: 50%;
-            box-shadow: 0 0 16px rgba(140, 180, 220, 0.5), inset 0 0 8px rgba(140, 180, 220, 0.25);
-            background: transparent;
-            transition: width 0.18s, height 0.18s, border-color 0.18s, box-shadow 0.18s;
+            background: rgba(50, 38, 28, 0.25);
+            backdrop-filter: blur(1px);
+            transition: width 0.2s, height 0.2s;
+            box-shadow: 0 0 20px rgba(203,158,91,0.5);
         }
         #custom-cursor::after {
-            content: '';
+            content: '⚓';
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 4px;
-            height: 4px;
-            border-radius: 50%;
-            background: #fff;
-            box-shadow: 0 0 10px #fff, 0 0 20px rgba(180, 200, 240, 0.9);
-        }
-        #custom-cursor::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 36px;
-            height: 36px;
-            border: 1px solid rgba(160, 190, 220, 0.35);
-            border-radius: 50%;
-            box-shadow: 0 0 20px rgba(140, 180, 220, 0.2);
-            transition: all 0.18s;
+            font-size: 14px;
+            color: #f0cf9c;
+            text-shadow: 0 0 6px #b87c2e;
+            opacity: 0.7;
         }
         #custom-cursor.hover {
-            width: 40px;
-            height: 40px;
-            border-color: rgba(200, 220, 255, 1);
-            box-shadow: 0 0 28px rgba(160, 200, 240, 0.7), inset 0 0 14px rgba(160, 200, 240, 0.35);
-        }
-        #custom-cursor.hover::before {
-            width: 52px;
-            height: 52px;
-            border-color: rgba(180, 210, 240, 0.55);
-            box-shadow: 0 0 30px rgba(160, 200, 240, 0.35);
+            width: 48px;
+            height: 48px;
+            border-color: #eac486;
+            background: rgba(203, 158, 91, 0.15);
         }
 
+        /* Particles as sea spray / embers */
         .particles {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            inset: 0;
             pointer-events: none;
-            z-index: 0;
+            z-index: 1;
         }
         .particle {
             position: absolute;
-            opacity: 0;
-            animation: driftFloat linear infinite;
+            background: radial-gradient(circle, #f3e2bf, #cb9e5b);
             border-radius: 50%;
-            background: #d8e8ff;
-            box-shadow: 0 0 6px rgba(180, 200, 240, 0.7), 0 0 14px rgba(140, 170, 220, 0.35);
+            opacity: 0;
+            filter: blur(0.8px);
+            animation: driftSpray linear infinite;
+            box-shadow: 0 0 4px #fad480;
         }
-        @keyframes driftFloat {
-            0% {
-                transform: translateY(108vh) translateX(0) scale(0);
-                opacity: 0;
-            }
-            8% {
-                opacity: 0.85;
-            }
-            25% {
-                opacity: 0.5;
-            }
-            65% {
-                opacity: 0.12;
-            }
-            100% {
-                transform: translateY(-12vh) translateX(40px) scale(2.2);
-                opacity: 0;
-            }
+        @keyframes driftSpray {
+            0% { transform: translateY(110vh) translateX(0) scale(0.2); opacity: 0; }
+            12% { opacity: 0.7; }
+            50% { opacity: 0.4; transform: translateY(20vh) translateX(20px) scale(1); }
+            100% { transform: translateY(-10vh) translateX(-15px) scale(1.8); opacity: 0; }
         }
 
-        /* ---------- SIDEBAR ---------- */
+        /* SIDEBAR — aged wood & canvas */
         .sidebar {
             position: fixed;
             top: 0;
             left: 0;
             width: var(--sidebar-width);
             height: 100vh;
-            background: rgba(8, 8, 22, 0.94);
-            backdrop-filter: blur(28px);
-            -webkit-backdrop-filter: blur(28px);
-            border-right: 1px solid var(--border-soft);
+            background: rgba(23, 20, 17, 0.94);
+            backdrop-filter: blur(20px);
+            border-right: 1px solid #7a603f;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             z-index: 100;
-            padding: 3rem 1.5rem;
-            box-shadow: 2px 0 40px rgba(0, 0, 0, 0.5), inset -1px 0 0 rgba(60, 80, 110, 0.3);
+            padding: 2rem 1.2rem;
+            box-shadow: 5px 0 35px rgba(0, 0, 0, 0.7), inset -1px 0 0 rgba(180, 140, 80, 0.3);
             transition: transform 0.4s ease;
             font-family: var(--body-font);
         }
         .sidebar.collapsed {
             transform: translateX(-100%);
         }
-        .sidebar::after {
+        .sidebar::before {
             content: '';
             position: absolute;
-            top: 6%;
-            right: 0;
-            width: 1px;
-            height: 88%;
-            background: linear-gradient(180deg,
-                    transparent,
-                    rgba(120, 160, 210, 0.5) 8%,
-                    rgba(160, 200, 240, 0.6) 30%,
-                    rgba(200, 220, 250, 0.4) 50%,
-                    rgba(160, 200, 240, 0.6) 70%,
-                    rgba(120, 160, 210, 0.5) 92%,
-                    transparent);
-            box-shadow: 0 0 8px rgba(130, 180, 230, 0.3);
-            border-radius: 1px;
+            inset: 0;
+            background: repeating-linear-gradient(45deg, rgba(100, 70, 40, 0.1) 0px, rgba(100, 70, 40, 0.1) 2px, transparent 2px, transparent 10px);
+            pointer-events: none;
         }
         .sidebar-toggle {
             position: absolute;
             right: -22px;
             top: 50%;
-            transform: translateY(-50%);
-            width: 38px;
-            height: 38px;
-            background: #0d0d1f;
-            border: 1px solid var(--border-soft);
-            color: var(--oxygen-soft);
+            width: 40px;
+            height: 40px;
+            background: #352b1f;
+            border: 1px solid #b8975c;
+            color: #f3dbaa;
+            border-radius: 50%;
             cursor: pointer;
-            z-index: 101;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 0.9rem;
-            box-shadow: 0 0 14px rgba(100, 140, 200, 0.3);
-            transition: all 0.3s;
-            font-family: var(--header-font);
-            border-radius: 50%;
+            font-size: 1.2rem;
+            transition: 0.2s;
+            box-shadow: 0 0 12px rgba(0,0,0,0.5);
         }
         .sidebar-toggle:hover {
-            background: rgba(30, 40, 60, 0.7);
-            border-color: var(--oxygen-blue);
-            color: #fff;
-            box-shadow: 0 0 22px rgba(140, 190, 240, 0.55);
+            background: #5f482e;
+            border-color: #f0c87a;
         }
-        .sidebar-logo {
-            margin-bottom: 3rem;
-            text-align: center;
-        }
-        .lunar-disc {
-            width: 74px;
-            height: 74px;
-            border-radius: 50%;
+
+        /* Compass Rose / wheel (replaces lunar disc) */
+        .compass-rose {
+            width: 90px;
+            height: 90px;
             margin: 0 auto 1.2rem;
-            background: radial-gradient(circle at 55% 45%,
-                    #e8e8f8 0%,
-                    #c8cdd8 25%,
-                    #a0a5b4 50%,
-                    #7a7f90 75%,
-                    #555a68 100%);
-            box-shadow: 0 0 30px rgba(160, 190, 230, 0.5), 0 0 60px rgba(140, 170, 210, 0.25), inset 0 0 30px rgba(0, 0, 0, 0.3);
-            animation: lunarPulse 4s ease-in-out infinite;
+            background: radial-gradient(circle at 35% 35%, #dbba7a, #9c753e);
+            border-radius: 50%;
+            box-shadow: 0 0 0 4px #2c241a, 0 0 0 8px #594a33, 0 0 20px rgba(200, 160, 80, 0.6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.8rem;
+            text-shadow: 0 2px 5px #00000066;
+            animation: tidePulse 4s infinite alternate;
             position: relative;
         }
-        .lunar-disc::after {
-            content: '';
-            position: absolute;
-            width: 14px;
-            height: 14px;
-            background: rgba(180, 190, 210, 0.5);
-            border-radius: 50%;
-            top: 18px;
-            left: 16px;
-            box-shadow: 0 0 6px rgba(180, 190, 210, 0.4);
+        .compass-rose::after {
+            content: "🧭";
+            font-size: 3rem;
+            filter: drop-shadow(0 0 6px gold);
         }
-        .lunar-disc::before {
-            content: '';
-            position: absolute;
-            width: 8px;
-            height: 8px;
-            background: rgba(160, 170, 190, 0.45);
-            border-radius: 50%;
-            top: 42px;
-            left: 38px;
-            box-shadow: 0 0 4px rgba(160, 170, 190, 0.3);
+        @keyframes tidePulse {
+            0% { box-shadow: 0 0 0 4px #2c241a, 0 0 0 8px #594a33, 0 0 18px rgba(200,160,80,0.5); }
+            100% { box-shadow: 0 0 0 4px #4e3c24, 0 0 0 10px #816b44, 0 0 35px rgba(230,180,90,0.9); }
         }
-        @keyframes lunarPulse {
-            0%,
-            100% {
-                box-shadow: 0 0 30px rgba(160, 190, 230, 0.5), 0 0 60px rgba(140, 170, 210, 0.25), inset 0 0 30px rgba(0, 0, 0, 0.3);
-            }
-            50% {
-                box-shadow: 0 0 48px rgba(180, 210, 250, 0.65), 0 0 80px rgba(160, 190, 230, 0.35), inset 0 0 40px rgba(0, 0, 0, 0.35);
-            }
-        }
+
         .sidebar-logo h1 {
             font-family: var(--header-font);
-            font-size: 1.1rem;
-            color: var(--oxygen-soft);
-            font-weight: 500;
-            letter-spacing: 0.08em;
-            line-height: 1.5;
-            text-shadow: 0 0 14px rgba(150, 190, 230, 0.5);
-            margin-bottom: 0.25rem;
+            font-size: 1.2rem;
+            color: #f0dfb6;
+            letter-spacing: 2px;
+            font-weight: 700;
+            text-shadow: 0 0 8px #ab823e;
         }
         .sidebar-logo .subtitle {
             font-family: var(--mono-font);
-            font-size: 0.7rem;
-            color: var(--accent-copper);
-            letter-spacing: 3px;
-            text-shadow: 0 0 8px rgba(220, 140, 100, 0.4);
-            text-transform: uppercase;
+            font-size: 0.68rem;
+            color: #bbaa7f;
+            letter-spacing: 2px;
+            margin-top: 5px;
         }
         .sidebar nav {
+            margin: 2rem 0;
+            width: 100%;
             display: flex;
             flex-direction: column;
-            gap: 0.9rem;
-            width: 100%;
+            gap: 0.8rem;
         }
         .sidebar nav a {
             text-decoration: none;
-            color: var(--text-dim);
+            color: #cbc2a4;
             font-family: var(--body-font);
-            font-weight: 400;
-            font-size: 0.8rem;
-            letter-spacing: 1.5px;
+            font-weight: 500;
             text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 2px;
             padding: 0.55rem 1rem;
-            border-radius: var(--radius-module);
-            transition: all 0.3s;
+            border-left: 2px solid transparent;
+            transition: 0.2s;
             display: flex;
             align-items: center;
-            gap: 0.75rem;
-            border: 1px solid transparent;
+            gap: 12px;
         }
         .sidebar nav a .dot {
-            width: 7px;
-            height: 7px;
-            border-radius: 50%;
-            background: var(--oxygen-blue);
-            box-shadow: 0 0 8px var(--oxygen-blue);
-            display: inline-block;
-            transition: all 0.3s;
+            width: 8px;
+            height: 8px;
+            background: #cb9e5b;
+            border-radius: 0;
+            transform: rotate(45deg);
+            box-shadow: 0 0 6px #e5b061;
         }
         .sidebar nav a:hover {
-            color: #e0e8f8;
-            border-color: rgba(130, 170, 210, 0.5);
-            box-shadow: 0 0 14px rgba(120, 160, 210, 0.3);
-            background: rgba(120, 160, 210, 0.06);
-        }
-        .sidebar nav a:hover .dot {
-            box-shadow: 0 0 14px var(--oxygen-soft);
-            background: #c0d8f8;
+            color: #f7eaca;
+            border-left-color: #dba553;
+            background: rgba(80, 60, 40, 0.4);
         }
         .sidebar nav a.active {
-            color: #fff;
-            border-color: var(--oxygen-blue);
-            box-shadow: 0 0 18px rgba(140, 190, 240, 0.4), inset 0 0 10px rgba(140, 190, 240, 0.1);
-            background: rgba(120, 170, 220, 0.1);
-            font-weight: 500;
-        }
-        .sidebar nav a.active .dot {
-            background: #fff;
-            box-shadow: 0 0 16px #fff, 0 0 24px rgba(180, 210, 250, 0.7);
+            color: #fdf0cf;
+            border-left-color: #f0bc6e;
+            background: rgba(100, 70, 40, 0.3);
+            font-weight: 600;
         }
         .sidebar-footer {
             margin-top: auto;
             font-size: 0.6rem;
-            color: var(--text-subtle);
-            letter-spacing: 2px;
             text-align: center;
-            border-top: 1px solid var(--border-soft);
-            padding-top: 2rem;
-            width: 100%;
-            font-family: var(--mono-font);
+            color: #a48d66;
+            border-top: 1px solid #5e4c33;
+            padding-top: 1rem;
         }
-        .star-icon {
-            margin: 0.8rem auto 0;
-            font-size: 1.4rem;
-            color: var(--oxygen-soft);
-            display: inline-block;
-            text-shadow: 0 0 16px var(--oxygen-blue), 0 0 30px rgba(140, 180, 220, 0.5);
-            animation: starTwinkle 2.5s infinite alternate;
-        }
-        @keyframes starTwinkle {
-            0%,
-            100% {
-                opacity: 0.7;
-                text-shadow: 0 0 10px var(--oxygen-blue);
-            }
-            50% {
-                opacity: 1;
-                text-shadow: 0 0 24px #fff, 0 0 40px var(--oxygen-soft);
-            }
-        }
-
         .mobile-toggle {
             display: none;
             position: fixed;
-            top: 20px;
-            left: 20px;
+            top: 18px;
+            left: 18px;
             z-index: 200;
-            font-size: 1.5rem;
-            color: var(--oxygen-soft);
-            background: rgba(8, 8, 22, 0.9);
-            border: 1px solid var(--border-soft);
-            padding: 0.3rem 0.8rem;
+            background: #2c221ab3;
+            border: 1px solid #b5874b;
+            padding: 0.5rem 0.9rem;
+            color: #f7d894;
+            backdrop-filter: blur(10px);
             cursor: pointer;
-            backdrop-filter: blur(12px);
-            box-shadow: 0 0 14px rgba(100, 140, 200, 0.3);
-            border-radius: var(--radius-module);
-            font-family: var(--header-font);
+            font-size: 1.5rem;
+            border-radius: 12px;
         }
-
         .main-content {
             margin-left: var(--sidebar-width);
-            flex: 1;
-            padding: 4rem 4rem 3rem;
+            padding: 3rem 3.5rem;
             position: relative;
-            z-index: 5;
-            transition: margin-left 0.4s ease;
+            z-index: 10;
+            transition: margin-left 0.4s;
         }
         .main-content.expanded {
             margin-left: 0;
         }
-
         .page {
             display: none;
-            animation: fadeInPage 0.5s ease forwards;
+            animation: fadeRise 0.5s ease;
         }
         .page.active {
             display: block;
         }
-        @keyframes fadeInPage {
-            from {
-                opacity: 0;
-                transform: translateY(16px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        @keyframes fadeRise {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
-
         h2 {
             font-family: var(--header-font);
             font-size: 2rem;
-            color: var(--oxygen-soft);
-            font-weight: 500;
-            margin-bottom: 0.4rem;
-            letter-spacing: 0.06em;
-            text-shadow: 0 0 18px rgba(150, 190, 230, 0.45);
+            letter-spacing: 2px;
+            color: #efdba8;
+            text-shadow: 0 2px 8px #6a4e26;
+            border-left: 5px solid #cb9e5b;
+            padding-left: 1rem;
         }
         .section-underline {
-            width: 90px;
-            height: 2px;
-            background: linear-gradient(90deg, var(--oxygen-blue), rgba(140, 190, 230, 0.4), transparent);
-            margin-bottom: 2rem;
-            box-shadow: 0 0 8px rgba(130, 180, 220, 0.5);
-            border-radius: 1px;
+            width: 120px;
+            height: 3px;
+            background: linear-gradient(90deg, #e0b069, #7d623b, transparent);
+            margin: 0.5rem 0 1.8rem 0;
         }
-        .section-intro {
-            color: var(--text-dim);
-            font-style: italic;
-            font-size: 1rem;
-            margin-bottom: 2.5rem;
-            padding-left: 1.5rem;
-            border-left: 3px solid var(--oxygen-blue);
-            box-shadow: -2px 0 10px rgba(120, 160, 210, 0.25);
-        }
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 2rem;
-        }
-        .card {
-            background: var(--module-bg);
-            border: 1px solid var(--border-soft);
-            border-radius: var(--radius-module);
+        .bio-box {
+            background: #1d1a14cc;
+            backdrop-filter: blur(4px);
+            border: 1px solid #7b623e;
+            border-left: 6px solid #e0aa5e;
             padding: 2rem;
-            transition: all var(--transition-smooth);
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
-            position: relative;
-            overflow: hidden;
+            display: flex;
+            gap: 1.8rem;
+            border-radius: 16px;
+            box-shadow: var(--shadow-nautical);
         }
-        .card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(160, 200, 240, 0.4), transparent);
-            opacity: 0;
-            transition: opacity 0.35s;
+        .bio-icon {
+            font-size: 3rem;
+        }
+        .card, .manifesto, .research-card {
+            background: rgba(20, 19, 17, 0.8);
+            backdrop-filter: blur(3px);
+            border: 1px solid #5b4a33;
+            border-radius: 20px;
+            padding: 1.8rem;
+            transition: var(--transition-wave);
+            box-shadow: 0 5px 18px rgba(0,0,0,0.3);
         }
         .card:hover {
-            border-color: var(--border-active);
-            box-shadow: var(--shadow-blue), 0 0 40px rgba(120, 160, 210, 0.15);
             transform: translateY(-3px);
-            background: var(--module-bg-alt);
+            border-color: #e6bc7a;
+            box-shadow: 0 12px 28px rgba(0,0,0,0.5), 0 0 20px rgba(190, 140, 60, 0.2);
         }
-        .card:hover::before {
-            opacity: 1;
-        }
-        .card h3 {
+        .card h3, .research-card h3 {
             font-family: var(--header-font);
-            font-size: 1.25rem;
-            color: #d0ddf0;
-            font-weight: 500;
-            margin-bottom: 0.4rem;
-            text-shadow: 0 0 8px rgba(160, 200, 240, 0.35);
+            color: #e8cf9a;
+            font-size: 1.4rem;
         }
         .date {
             font-family: var(--mono-font);
+            color: #bc956b;
+            letter-spacing: 2px;
             font-size: 0.7rem;
-            color: var(--accent-copper);
-            text-transform: uppercase;
-            letter-spacing: 2.5px;
-            display: block;
-            margin-bottom: 1rem;
-            text-shadow: 0 0 5px rgba(220, 140, 100, 0.35);
         }
-        .bio-box {
-            background: var(--module-bg-alt);
-            border: 1px solid var(--border-soft);
-            border-left: 4px solid var(--oxygen-blue);
-            padding: 2.5rem;
-            display: flex;
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 2rem;
-            align-items: flex-start;
-            box-shadow: var(--shadow-blue);
-            position: relative;
-            border-radius: var(--radius-module);
-        }
-        .bio-icon {
-            font-size: 2.4rem;
-            color: var(--oxygen-soft);
-            text-shadow: 0 0 16px var(--oxygen-blue);
         }
         .read-more {
             display: inline-flex;
-            align-items: center;
             gap: 0.5rem;
-            margin-top: 1.5rem;
-            color: var(--oxygen-blue);
-            text-decoration: none;
+            margin-top: 1.2rem;
+            color: #deaa6b;
             font-weight: 500;
-            font-size: 0.75rem;
-            letter-spacing: 1.5px;
-            text-transform: uppercase;
-            font-family: var(--body-font);
-            transition: 0.3s;
-            border-bottom: 1px dashed rgba(130, 180, 220, 0.5);
-            padding-bottom: 3px;
-            text-shadow: 0 0 6px rgba(130, 180, 220, 0.3);
+            border-bottom: 1px dashed #ad8550;
+            text-decoration: none;
+            font-family: var(--mono-font);
         }
-        .read-more:hover {
-            color: #fff;
-            border-bottom-color: #fff;
-            text-shadow: 0 0 14px rgba(180, 210, 250, 0.6);
-        }
-
-        .manifesto {
-            background: var(--module-surface);
-            border: 1px solid var(--border-soft);
-            padding: 2.5rem;
-            margin-top: 3rem;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.35);
-            position: relative;
-            border-radius: var(--radius-module);
-        }
-        .manifesto p {
-            font-style: italic;
-            font-size: 1.15rem;
-            color: var(--text-body);
-            text-shadow: 0 0 5px rgba(150, 190, 230, 0.2);
-        }
-
         .gateway {
-            margin-top: 5rem;
-            border-top: 1px solid var(--border-soft);
-            padding-top: 4rem;
-            box-shadow: 0 -1px 16px rgba(100, 140, 200, 0.15);
-        }
-        .gateway h2 {
-            font-size: 1.7rem;
-            margin-bottom: 2rem;
+            margin-top: 4rem;
+            border-top: 2px solid #705d3e;
+            padding-top: 2.5rem;
         }
         .gateway-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
-            gap: 1.8rem;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
         }
         .gateway-card {
-            background: var(--module-bg);
-            border: 1px solid var(--border-soft);
-            padding: 2rem 1.5rem;
+            background: #1f1c16aa;
+            border: 1px solid #8a6d46;
             text-align: center;
+            padding: 1rem;
+            border-radius: 32px;
             cursor: pointer;
-            transition: var(--transition-smooth);
-            box-shadow: 0 0 14px rgba(0, 0, 0, 0.3);
-            position: relative;
-            overflow: hidden;
-            border-radius: var(--radius-module);
+            transition: 0.2s;
         }
         .gateway-card:hover {
-            border-color: var(--border-active);
-            box-shadow: var(--shadow-blue-strong), 0 0 35px rgba(120, 160, 210, 0.2);
-            transform: translateY(-3px);
-            background: var(--module-bg-alt);
+            background: #2f281eb3;
+            border-color: #dba852;
+            transform: scale(1.02);
         }
         .gateway-card .icon {
-            font-size: 1.8rem;
-            color: var(--oxygen-soft);
-            margin-bottom: 0.5rem;
-            text-shadow: 0 0 12px var(--oxygen-blue);
+            font-size: 2rem;
         }
-        .gateway-card h4 {
-            font-family: var(--header-font);
-            font-size: 0.95rem;
-            color: #d0ddf0;
-            font-weight: 500;
-            text-shadow: 0 0 8px rgba(150, 190, 230, 0.4);
-        }
-        .gateway-card p {
-            font-size: 0.7rem;
-            color: var(--text-subtle);
-            letter-spacing: 1px;
-        }
-
-        .colophon {
-            margin-top: 4rem;
-            padding-top: 2rem;
-            border-top: 1px solid var(--border-soft);
-            text-align: center;
-            font-family: var(--header-font);
-            font-size: 1.3rem;
-            color: var(--oxygen-soft);
-            letter-spacing: 0.08em;
-            text-shadow: 0 0 15px rgba(150, 190, 230, 0.4);
-        }
-
         #scroll-top-btn {
             position: fixed;
-            bottom: 40px;
-            right: 35px;
-            width: 44px;
-            height: 44px;
-            background: var(--module-bg);
-            border: 1px solid var(--border-soft);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--oxygen-soft);
-            font-size: 1.3rem;
-            cursor: pointer;
-            z-index: 800;
-            box-shadow: 0 0 16px rgba(100, 140, 200, 0.3);
-            transition: 0.35s;
-            opacity: 0;
-            visibility: hidden;
-            transform: translateY(20px);
-            font-family: var(--body-font);
+            bottom: 2rem;
+            right: 2rem;
+            background: #32271e;
+            border: 1px solid #dba24e;
+            color: #eec180;
+            width: 45px;
+            height: 45px;
             border-radius: 50%;
+            cursor: pointer;
+            opacity: 0;
+            transition: 0.2s;
+            font-size: 1.3rem;
+            z-index: 90;
         }
         #scroll-top-btn.visible {
             opacity: 1;
-            visibility: visible;
-            transform: translateY(0);
         }
-        #scroll-top-btn:hover {
-            border-color: var(--oxygen-blue);
-            color: #fff;
-            box-shadow: 0 0 28px rgba(140, 190, 240, 0.55);
-        }
-
         ::-webkit-scrollbar {
-            width: 6px;
-        }
-        ::-webkit-scrollbar-track {
-            background: var(--space-deep);
+            width: 7px;
+            background: #1b1712;
         }
         ::-webkit-scrollbar-thumb {
-            background: var(--lunar-regolith);
-            border-radius: 3px;
+            background: #b68744;
+            border-radius: 8px;
         }
-        ::-webkit-scrollbar-thumb:hover {
-            background: var(--oxygen-blue);
-            box-shadow: 0 0 8px var(--oxygen-blue);
-        }
-
         @media (max-width: 1000px) {
             .sidebar {
                 transform: translateX(-100%);
@@ -804,7 +495,7 @@
             }
             .main-content {
                 margin-left: 0;
-                padding: 2rem 1.5rem;
+                padding: 2rem 1.2rem;
             }
             .mobile-toggle {
                 display: block;
@@ -812,244 +503,208 @@
             .sidebar-toggle {
                 display: none;
             }
-            h2 {
-                font-size: 1.6rem;
-            }
             #custom-cursor {
                 display: none;
             }
             body {
                 cursor: auto;
             }
-            .bio-box {
-                flex-direction: column;
-                gap: 1rem;
-            }
         }
     </style>
 </head>
 <body>
-    <div class="progress-container"><div class="progress-bar" id="progressBar"></div></div>
-    <div class="particles" id="particles"></div>
-    <div id="custom-cursor"></div>
-    <div class="mobile-toggle" id="mobileToggle">☰</div>
+<div class="progress-container"><div class="progress-bar" id="progressBar"></div></div>
+<div class="particles" id="particles"></div>
+<div class="sea-mist"></div>
+<div id="custom-cursor"></div>
+<div class="mobile-toggle" id="mobileToggle">⚓</div>
 
-    <aside class="sidebar" id="sidebar">
-        <button class="sidebar-toggle" id="sidebarToggle" title="Toggle sidebar">◄</button>
-        <div class="sidebar-logo">
-            <div class="lunar-disc"></div>
-            <h1>The Intellectual<br>Sandbox</h1>
-            <div class="subtitle">Lunar Station · Tranquility Base</div>
-        </div>
-        <nav>
-            <a href="#" data-page="about" class="active"><span class="dot"></span> About</a>
-            <a href="#" data-page="essays"><span class="dot"></span> Essays</a>
-            <a href="#" data-page="research"><span class="dot"></span> Research</a>
-            <a href="#" data-page="scrapbook"><span class="dot"></span> Scrapbook</a>
-            <a href="https://students.iiserkol.ac.in/~sm22ms013/" target="_blank" rel="noopener noreferrer"><span class="dot"></span> IISER ↗</a>
-        </nav>
-        <div class="sidebar-footer">
-            <div class="star-icon">✦</div>
-            sm22ms013 / LUNAR NODE
-        </div>
-    </aside>
+<aside class="sidebar" id="sidebar">
+    <button class="sidebar-toggle" id="sidebarToggle">◀</button>
+    <div class="sidebar-logo">
+        <div class="compass-rose"></div>
+        <h1>The Starboard Chronicle</h1>
+        <div class="subtitle">Corsair’s Log · Sea & Sky Above</div>
+    </div>
+    <nav>
+        <a href="#" data-page="about" class="active"><span class="dot"></span> About the Crew</a>
+        <a href="#" data-page="essays"><span class="dot"></span> Charts & Chronicles</a>
+        <a href="#" data-page="research"><span class="dot"></span> Starboard Observatory</a>
+        <a href="#" data-page="scrapbook"><span class="dot"></span> Captain's Scrapbook</a>
+        <a href="https://students.iiserkol.ac.in/~sm22ms013/" target="_blank"><span class="dot"></span> Docked at IISER ↗</a>
+    </nav>
+    <div class="sidebar-footer">
+        <div>🏴‍☠️ sm22ms013 · CROW’S NEST</div>
+        <div style="font-size: 0.6rem;">— Merciless Sea, Boundless Sky —</div>
+    </div>
+</aside>
 
-    <main class="main-content" id="mainContent">
-        <div class="page active" id="page-about">
-            <h2>About the Node</h2>
-            <div class="section-underline"></div>
-            <div class="bio-box">
-                <div class="bio-icon">🛰️</div>
-                <div>
-                    <p><strong>I am an independent thinker and student at IISER Kolkata.</strong></p>
-                    <p>This digital space is my sanctuary beyond the algorithmic noise — a pressurized habitat for ideas, orbiting far from the gravitational pull of social media. No likes, no metrics, just raw thought, scientific inquiry, and the quiet hum of genuine curiosity.</p>
-                    <p>Wander through the essays, research notes, or the scrapbook. The only signal here is the one you choose to follow.</p>
-                </div>
-            </div>
-            <div class="manifesto">
-                <p><em>"In the vast silence of space, the quietest signal carries the most meaning. This lunar node is where I transmit — far from the clamour of Earth's endless data streams."</em></p>
+<main class="main-content" id="mainContent">
+    <div class="page active" id="page-about">
+        <h2>The Mariner's Codex</h2>
+        <div class="section-underline"></div>
+        <div class="bio-box">
+            <div class="bio-icon">🧭</div>
+            <div>
+                <p><strong>I am a wandering scholar, navigator of fierce tides and open skies — student at IISER Kolkata.</strong></p>
+                <p>This vessel drifts far beyond the algorithm’s maelstrom. No vanity metrics, no sirens of engagement. Only raw logs, salty manuscripts, and the true north of curiosity. From viking sagas to pirate charters, from the abyss to the crow’s nest — here we hoist the flag of unfiltered thought.</p>
+                <p>Set your course through essays, star-charts, and fragments of the endless adventure. The sea gives, the sky answers.</p>
             </div>
         </div>
-
-        <div class="page" id="page-essays">
-            <h2>Essays & Signals</h2>
-            <div class="section-underline"></div>
-            <p class="section-intro">Long‑form transmissions on philosophy, society, and the frontiers of thought.</p>
-            <div class="grid">
-                <div class="card">
-                    <span class="date">April 2026</span>
-                    <h3>Escaping the Gravity Well of Distraction</h3>
-                    <p>Why the modern web has become uninhabitable for deep thought, and how personal sites are the new lifeboats.</p>
-                    <a href="#" class="read-more">Read Signal →</a>
-                </div>
-                <div class="card">
-                    <span class="date">March 2026</span>
-                    <h3>Reclaiming Focus in a Fragmented World</h3>
-                    <p>Stepping away from feeds and restructuring my environment for deep work and genuine creativity.</p>
-                    <a href="#" class="read-more">Read Signal →</a>
-                </div>
-            </div>
+        <div class="manifesto">
+            <p><em>"Upon the merciless sea we carve our own runes; beneath the infinite sky we chase horizons. Let this log be a testament — no false harbors, only the call of the deep and the stars above."</em></p>
         </div>
+    </div>
 
-        <div class="page" id="page-research">
-            <h2>Academic & Research</h2>
-            <div class="section-underline"></div>
-            <p class="section-intro">Mission logs from IISER Kolkata — bridging formal training with independent inquiry.</p>
+    <div class="page" id="page-essays">
+        <h2>Charts & Chronicles</h2>
+        <div class="section-underline"></div>
+        <p class="section-intro" style="border-left:3px solid #e0aa5e; padding-left:1rem; margin-bottom:2rem;">Long‑form transmissions from the crow’s nest — philosophy, sea sagas, and the art of resistance.</p>
+        <div class="grid">
             <div class="card">
-                <h3>Current Studies & Interests</h3>
-                <p>Documenting ongoing coursework, literature reviews, and scientific observations. This node links my formal training with self‑directed exploration across the sciences.</p>
+                <span class="date">April 1726 (by sea-calendar)</span>
+                <h3>Escaping the Maelstrom of Distraction</h3>
+                <p>Why the modern web has become a treacherous Siren’s cove, and how independent logs are the new longship refuges.</p>
+                <a href="#" class="read-more">Read the Log →</a>
+            </div>
+            <div class="card">
+                <span class="date">March 1726</span>
+                <h3>Viking Principles of Deep Focus</h3>
+                <p>Steering away from shallow currents, reclaiming the ancient art of single-minded voyage in a fragmented world.</p>
+                <a href="#" class="read-more">Unfurl the scroll →</a>
             </div>
         </div>
+    </div>
 
-        <div class="page" id="page-scrapbook">
-            <h2>The Scrapbook</h2>
-            <div class="section-underline"></div>
-            <p class="section-intro">Shorter fragments, daily logs, and local observations — captured in real time.</p>
-            <div class="card" style="border-left:4px solid var(--oxygen-blue);">
-                <span class="date">April 6, 2026</span>
-                <p>Early morning in West Bengal. The campus hums with silence before the day breaks. Moving my thoughts off external platforms and into this self‑hosted refuge — finally. The signal is clear.</p>
-            </div>
+    <div class="page" id="page-research">
+        <h2>Starboard Observatory</h2>
+        <div class="section-underline"></div>
+        <p class="section-intro" style="border-left:3px solid #e0aa5e; padding-left:1rem;">Mission logs from IISER Kolkata: navigation by science, runes of inquiry, and celestial mechanics.</p>
+        <div class="card">
+            <h3>⚓ Current Expeditions & Natural Philosophy</h3>
+            <p>Charting formal studies side by side with independent exploration — from tidal dynamics to the optics of northern skies. Here lie annotated readings, observational notes, and the raw materials of discovery.</p>
         </div>
+    </div>
 
-        <div class="gateway">
-            <h2>Navigate the Station</h2>
-            <div class="gateway-grid">
-                <div class="gateway-card" data-page="about">
-                    <div class="icon">📡</div><h4>About</h4><p>The curator & mission</p>
-                </div>
-                <div class="gateway-card" data-page="essays">
-                    <div class="icon">💾</div><h4>Essays</h4><p>Deep signals</p>
-                </div>
-                <div class="gateway-card" data-page="research">
-                    <div class="icon">🔬</div><h4>Research</h4><p>Mission logs</p>
-                </div>
-                <div class="gateway-card" data-page="scrapbook">
-                    <div class="icon">📼</div><h4>Scrapbook</h4><p>Fragments & logs</p>
-                </div>
-            </div>
+    <div class="page" id="page-scrapbook">
+        <h2>Captain's Scrapbook</h2>
+        <div class="section-underline"></div>
+        <p class="section-intro" style="border-left:3px solid #e0aa5e; padding-left:1rem;">Shanties, logs, and flotsam — fragments from the journey.</p>
+        <div class="card" style="border-left:6px solid #d49b4a;">
+            <span class="date">April 6, 1726 / Early fog-watch</span>
+            <p>Morning in the Bay of Bengal. The campus hums like a hushed vessel before dawn. Finally shifted my berth from external platforms into this self-built caravel — the signal is clear as a star on a moonless night.</p>
         </div>
-        <div class="colophon">— sm22ms013 · LUNAR STATION —</div>
-    </main>
+        <div class="card" style="margin-top:1.5rem;">
+            <span class="date">April 1, 1726</span>
+            <p>Raised the Jolly Roger on this digital sea. Saw a storm-bird over the eastern yard — a good omen. Time to fill these pages with salt and starlight.</p>
+        </div>
+    </div>
 
-    <button id="scroll-top-btn" aria-label="Scroll to top">↑</button>
+    <div class="gateway">
+        <h2>Ports of Call</h2>
+        <div class="gateway-grid">
+            <div class="gateway-card" data-page="about"><div class="icon">🏴‍☠️</div><h4>The Helm</h4><p>About the Captain</p></div>
+            <div class="gateway-card" data-page="essays"><div class="icon">📜</div><h4>Sea Charts</h4><p>Essays & stories</p></div>
+            <div class="gateway-card" data-page="research"><div class="icon">🔭</div><h4>Astrolabe</h4><p>Research logs</p></div>
+            <div class="gateway-card" data-page="scrapbook"><div class="icon">🗺️</div><h4>Wreck & Wonder</h4><p>Scrapbook</p></div>
+        </div>
+    </div>
+    <div class="colophon" style="text-align:center; margin-top:3rem; font-family: var(--header-font); color:#c2a065;">⚓ — sm22ms013 · The Starboard Chronicle — ⛵</div>
+</main>
+<button id="scroll-top-btn" aria-label="To the crow's nest">↑</button>
 
-    <script>
-        (function() {
-            const progressBar = document.getElementById('progressBar');
-            window.addEventListener('scroll', () => {
-                const scrollTop = window.scrollY;
-                const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-                const scrolled = (scrollTop / docHeight) * 100;
-                progressBar.style.width = scrolled + '%';
+<script>
+    (function() {
+        // progress
+        const progressBar = document.getElementById('progressBar');
+        window.addEventListener('scroll', () => {
+            const scrollTop = window.scrollY;
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const scrolled = (scrollTop / docHeight) * 100;
+            progressBar.style.width = scrolled + '%';
+        });
+
+        const pages = document.querySelectorAll('.page');
+        const navLinks = document.querySelectorAll('.sidebar nav a[data-page]');
+        const gatewayCards = document.querySelectorAll('.gateway-card[data-page]');
+        const mobileToggle = document.getElementById('mobileToggle');
+        const sidebar = document.getElementById('sidebar');
+        const mainContent = document.getElementById('mainContent');
+        const sidebarToggle = document.getElementById('sidebarToggle');
+
+        function switchPage(pageId) {
+            pages.forEach(p => p.classList.remove('active'));
+            const target = document.getElementById('page-' + pageId);
+            if (target) target.classList.add('active');
+            navLinks.forEach(link => {
+                if (link.dataset.page === pageId) link.classList.add('active');
+                else link.classList.remove('active');
             });
+            if (window.innerWidth <= 1000) sidebar.classList.remove('open');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
 
-            const pages = document.querySelectorAll('.page');
-            const navLinks = document.querySelectorAll('.sidebar nav a[data-page]');
-            const gatewayCards = document.querySelectorAll('.gateway-card[data-page]');
-            const mobileToggle = document.getElementById('mobileToggle');
-            const sidebar = document.getElementById('sidebar');
-            const mainContent = document.getElementById('mainContent');
-            const sidebarToggle = document.getElementById('sidebarToggle');
-
-            function switchPage(pageId) {
-                pages.forEach(p => p.classList.remove('active'));
-                const target = document.getElementById('page-' + pageId);
-                if (target) {
-                    target.classList.add('active');
-                    target.style.animation = 'none';
-                    target.offsetHeight;
-                    target.style.animation = 'fadeInPage 0.5s ease forwards';
-                }
-                navLinks.forEach(link => {
-                    if (link.dataset.page === pageId) link.classList.add('active');
-                    else link.classList.remove('active');
-                });
-                if (window.innerWidth <= 1000) {
-                    sidebar.classList.remove('open');
-                }
-                window.scrollTo({ top: 0, behavior: 'smooth' });
+        navLinks.forEach(link => link.addEventListener('click', (e) => {
+            e.preventDefault();
+            switchPage(link.dataset.page);
+        }));
+        gatewayCards.forEach(card => card.addEventListener('click', () => switchPage(card.dataset.page)));
+        mobileToggle.addEventListener('click', () => sidebar.classList.toggle('open'));
+        document.addEventListener('click', (e) => {
+            if (window.innerWidth <= 1000 && !sidebar.contains(e.target) && e.target !== mobileToggle) {
+                sidebar.classList.remove('open');
             }
+        });
+        sidebarToggle.addEventListener('click', () => {
+            sidebar.classList.toggle('collapsed');
+            mainContent.classList.toggle('expanded');
+            sidebarToggle.innerHTML = sidebar.classList.contains('collapsed') ? '►' : '◀';
+        });
 
-            navLinks.forEach(link => link.addEventListener('click', e => {
-                e.preventDefault();
-                switchPage(link.dataset.page);
-            }));
-            gatewayCards.forEach(card => card.addEventListener('click', () => switchPage(card.dataset
-                .page)));
-            mobileToggle.addEventListener('click', () => sidebar.classList.toggle('open'));
-
-            document.addEventListener('click', e => {
-                if (window.innerWidth <= 1000 && !sidebar.contains(e.target) && e.target !==
-                    mobileToggle) {
-                    sidebar.classList.remove('open');
-                }
+        // custom cursor
+        const cursor = document.getElementById('custom-cursor');
+        if (cursor && window.innerWidth > 1000) {
+            document.addEventListener('mousemove', (e) => {
+                cursor.style.transform = `translate(${e.clientX}px, ${e.clientY}px) translate(-50%,-50%)`;
             });
-
-            sidebarToggle.addEventListener('click', () => {
-                sidebar.classList.toggle('collapsed');
-                mainContent.classList.toggle('expanded');
-                if (sidebar.classList.contains('collapsed')) {
-                    sidebarToggle.innerHTML = '►';
-                } else {
-                    sidebarToggle.innerHTML = '◄';
-                }
+            const hoverTargets = document.querySelectorAll('a, button, .card, .gateway-card, .bio-box, .sidebar-toggle, .read-more');
+            hoverTargets.forEach(el => {
+                el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
+                el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
             });
+        } else if (cursor) cursor.style.display = 'none';
 
-            const cursor = document.getElementById('custom-cursor');
-            if (cursor && window.innerWidth > 1000) {
-                document.addEventListener('mousemove', e => {
-                    cursor.style.transform =
-                        `translate(${e.clientX}px, ${e.clientY}px) translate(-50%,-50%)`;
-                });
-                const hoverTargets = document.querySelectorAll(
-                    'a, button, .card, .gateway-card, .bio-box, .sidebar-toggle');
-                hoverTargets.forEach(el => {
-                    el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
-                    el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
-                });
-                document.addEventListener('mouseleave', () => cursor.style.opacity = '0');
-                document.addEventListener('mouseenter', () => cursor.style.opacity = '1');
-            } else if (cursor) {
-                cursor.style.display = 'none';
-            }
+        // sea spray particles (reminiscent of stars & foam)
+        const particlesContainer = document.getElementById('particles');
+        const sprayColors = ['#efd6a8', '#e9c889', '#dbc28b', '#f9eac1', '#c6aa71', '#f5e2b5'];
+        for (let i = 0; i < 70; i++) {
+            const p = document.createElement('div');
+            p.classList.add('particle');
+            const size = Math.random() * 5 + 2;
+            p.style.width = size + 'px';
+            p.style.height = size + 'px';
+            p.style.left = Math.random() * 100 + '%';
+            p.style.animationDuration = Math.random() * 18 + 12 + 's';
+            p.style.animationDelay = Math.random() * 20 + 's';
+            p.style.background = sprayColors[Math.floor(Math.random() * sprayColors.length)];
+            p.style.opacity = Math.random() * 0.6 + 0.2;
+            particlesContainer.appendChild(p);
+        }
 
-            const particlesContainer = document.getElementById('particles');
-            const particleColors = [
-                '#d8e8ff', '#c0d8f8', '#e0ecff', '#b8d0f0',
-                '#d0e0f8', '#c8daf5', '#e4f0ff', '#bcc8e8',
-                '#ffffff', '#dce8f8'
-            ];
-            for (let i = 0; i < 55; i++) {
-                const p = document.createElement('div');
-                p.classList.add('particle');
-                const size = Math.random() * 3.5 + 1.5;
-                p.style.width = size + 'px';
-                p.style.height = size + 'px';
-                p.style.left = Math.random() * 100 + '%';
-                p.style.animationDuration = Math.random() * 22 + 14 + 's';
-                p.style.animationDelay = Math.random() * 22 + 's';
-                const color = particleColors[Math.floor(Math.random() * particleColors.length)];
-                p.style.background = color;
-                p.style.boxShadow = `0 0 ${size*3}px ${color}, 0 0 ${size*6}px rgba(160,190,220,0.4)`;
-                particlesContainer.appendChild(p);
-            }
+        const scrollBtn = document.getElementById('scroll-top-btn');
+        window.addEventListener('scroll', () => {
+            scrollBtn.classList.toggle('visible', window.scrollY > 500);
+        });
+        scrollBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 
-            const scrollBtn = document.getElementById('scroll-top-btn');
-            window.addEventListener('scroll', () => {
-                scrollBtn.classList.toggle('visible', window.scrollY > 500);
-            });
-            scrollBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+        const hashPage = window.location.hash.substring(1);
+        if (['about', 'essays', 'research', 'scrapbook'].includes(hashPage)) switchPage(hashPage);
+        else switchPage('about');
 
-            const initialPage = window.location.hash.substring(1) || 'about';
-            if (['about', 'essays', 'research', 'scrapbook'].includes(initialPage)) switchPage(
-            initialPage);
-
-            document.addEventListener('keydown', e => {
-                if (e.key === 'Escape' && window.innerWidth <= 1000) {
-                    sidebar.classList.remove('open');
-                }
-            });
-        })();
-    </script>
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && window.innerWidth <= 1000) sidebar.classList.remove('open');
+        });
+    })();
+</script>
 </body>
 </html>
